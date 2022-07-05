@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     number_downvotes: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Reviews',
+    modelName: 'reviews',
   });
   return Reviews;
 };
