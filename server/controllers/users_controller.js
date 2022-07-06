@@ -32,10 +32,6 @@ const getUser = async (req, res,) => {
 
 
 const createUser = async (req, res) => {
-  // Validate data
-  console.log(req.body);
-
-  // Create user in database
   let createdUser = null;
   try {
     createdUser = await users.create(req.body); 
@@ -98,5 +94,5 @@ module.exports = {
   getOne: getUser,
   create: createUser,
   update: updateUser,
-  delete: deleteUser,
+  delete: deleteUser
 }

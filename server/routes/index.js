@@ -6,15 +6,11 @@ const router = express.Router();
 
 const users = require("../controllers/users_controller");
 const crewMembers = require("../controllers/crew_members_controller");
-//movies
 const movies = require("../controllers/movies_controller");
-//tv_series
 const tvSeries = require("../controllers/tv_series_controller");
 //tv_episodes (foreign keys)
 const tvEpisodes = require("../controllers/tv_episodes_controller");
-//genres
 const genres = require("../controllers/genres_controller");
-//roles
 const roles = require("../controllers/roles_controller");
 //reviews (foreign keys)
 const reviews = require("../controllers/reviews_controller");
