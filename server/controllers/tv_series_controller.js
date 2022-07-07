@@ -29,17 +29,12 @@ const getOneTvSeries = async (req, res,) => {
   }
 }
 
-
-
 const createTvSeries = async (req, res) => {
   let createdTvSeries = null;
   try {
     createdTvSeries = await tv_series.create(req.body); 
   } catch(err) {
     console.error(err);
-    if  (err.name === 'SequelizeUniqueConstraintError') {
-      return res.status(402).json({ message: 'The tv series already exists'});
-    }
     return res.status(402).json({ error: err })
   }
 

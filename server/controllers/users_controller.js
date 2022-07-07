@@ -1,9 +1,13 @@
-const { users } = require('../models');
+const { users, reviews } = require('../models');
 
 const getUsers = async (req, res) => {
   let allUsers = [];
   try {
-    allUsers = await users.findAll();
+    allUsers = await users.findAll({
+      include: [{
+        model: reviews,
+        as: 'review'
+      }]});
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -19,7 +23,11 @@ const getUser = async (req, res,) => {
   try {
     searchedUser= await users.findOne({
       where: { id: userId}
-    });
+    }, {
+      include: [{
+        model: reviews,
+        as: 'review'
+      }]});
 
     return res.status(200).json(searchedUser)
   
@@ -37,7 +45,7 @@ const createUser = async (req, res) => {
     createdUser = await users.create(req.body); 
   } catch(err) {
     console.error(err);
-    if  (err.name === 'SequelizeUniqueConstraintError') {
+    if  (err.username === 'SequelizeUniqueConstraintError') {
       return res.status(402).json({ message: 'The user already exists'});
     }
     return res.status(402).json({ error: err })
@@ -46,11 +54,33 @@ const createUser = async (req, res) => {
   return res.status(200).json(createdUser);
 }
 
+const createUserWithReview = async (req, res) => {
+  let createdUserWithReview = null;
+  try {
+    createdUserWithReview = await users.create(req.body, {
+      include: [{
+        model: reviews,
+        as: 'review'
+      }]}); 
+  } catch(err) {
+    console.error(err);
+    if  (err.username === 'SequelizeUniqueConstraintError') {
+      return res.status(402).json({ message: 'The user already exists'});
+    }
+    return res.status(402).json({ error: err })
+  }
+
+  return res.status(200).json(createdUser);
+}
 const updateUser = async (req, res) => {
     let userId = req.params.id;
     let {username, password, email, image} = req.body;
     try {
-      let userToUpdate = await users.findByPk(userId)
+      let userToUpdate = await users.findByPk(userId, {
+        include: [{
+          model: reviews,
+          as: 'review'
+        }]})
       userToUpdate = await users.update({
           username: username,
           password: password,
@@ -93,6 +123,7 @@ module.exports = {
   getAll: getUsers,
   getOne: getUser,
   create: createUser,
+  createWithReview: createUserWithReview,
   update: updateUser,
   delete: deleteUser
 }
