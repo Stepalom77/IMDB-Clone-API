@@ -4,13 +4,27 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class crew_members extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      crew_members.belongsToMany(models.tv_series, {
+        through: 'crew_members_tv_series',
+        as: 'tv_series',
+        foreignKey: 'crew_members_id'
+      });
+      crew_members.belongsToMany(models.tv_episodes, {
+        through: 'crew_members_tv_episodes',
+        as: 'tv_episodes',
+        foreignKey: 'crew_members_id'
+      });
+      crew_members.belongsToMany(models.movies, {
+        through: 'crew_members_movies',
+        as: 'movies',
+        foreignKey: 'crew_members_id'
+      });
+      crew_members.belongsToMany(models.roles, {
+        through: 'crew_members_roles',
+        as: 'roles',
+        foreignKey: 'crew_members_id'
+      });
     }
   }
   crew_members.init({

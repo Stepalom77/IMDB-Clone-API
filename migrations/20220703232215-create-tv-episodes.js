@@ -29,11 +29,11 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      users_id: {
+      tv_series_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'tv_series',
           key: 'id'
         }
       },

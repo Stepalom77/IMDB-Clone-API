@@ -1,14 +1,22 @@
-const { DataTypes } = require("sequelize/types");
-
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const roles = sequelize.define('roles', {
-    name: {
-      name: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
+  class roles extends Model {
+    static associate(models) {
+      roles.belongsToMany(models.crew_members, {
+        through: 'crew_members_roles',
+        as: 'crew_members',
+        foreignKey: 'roles_id'
+      });
+    }
+  }
+  roles.init({
+    name: DataTypes.STRING
   }, {
-    // Other model options go here
+    sequelize,
+    modelName: 'roles',
   });
   return roles;
-}
+};
