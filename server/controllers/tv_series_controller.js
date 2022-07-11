@@ -1,9 +1,19 @@
-const { tv_series } = require('../models');
+const { tv_series, tv_episodes, genres, crew_members } = require('../models');
 
 const getTvSeries = async (req, res) => {
   let allTvSeries = [];
   try {
-    allTvSeries = await tv_series.findAll();
+    allTvSeries = await tv_series.findAll({
+      include: [{
+        model: tv_episodes,
+        as: 'tv_episode'
+      }, {
+        model: genres,
+        as: 'genre'
+      }, {
+        model: crew_members,
+        as: 'crew_member'
+      }]});
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -19,7 +29,17 @@ const getOneTvSeries = async (req, res,) => {
   try {
     searchedTvSeries= await tv_series.findOne({
       where: { id: tvSeriesId}
-    });
+    }, {
+      include: [{
+        model: tv_episodes,
+        as: 'tv_episode'
+      }, {
+        model: genres,
+        as: 'genre'
+      }, {
+        model: crew_members,
+        as: 'crew_member'
+      }]});
 
     return res.status(200).json(searchedTvSeries)
   
@@ -45,7 +65,17 @@ const updateTvSeries = async (req, res) => {
     let tvSeriesId = req.params.id;
     let {name, rating, popularity, year, number_episodes, image, description} = req.body;
     try {
-      let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId)
+      let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId, {
+        include: [{
+          model: tv_episodes,
+          as: 'tv_episode'
+        }, {
+          model: genres,
+          as: 'genre'
+        }, {
+          model: crew_members,
+          as: 'crew_member'
+        }]})
       tvSeriesToUpdate = await tv_series.update({
           name: name,
           rating: rating,
