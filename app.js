@@ -1,10 +1,17 @@
 require('dotenv').config()
 const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
-//const router = require('./server/routes/index');
 
-//app.use(bodyParser.json({ type: 'application/json' }));
+//Middlewares
+//const router = require('./server/routes/index');
+app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.json({ type: 'application/json' }));
+app.use(express.json());
+app.use(morgan('dev'));
 //app.use('/api/v1', router);
 
 app.get('/', (req, res) => {
