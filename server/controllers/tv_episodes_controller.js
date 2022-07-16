@@ -112,7 +112,7 @@ const getTvEpisodes = async (req, res) => {
   }
   const updateTvEpisodes = async (req, res) => {
       let tvEpisodesId = req.params.id;
-      let {name, rating, popularity, year, number_episodes, image, description} = req.body;
+      let {name, rating, runtime, year, image, description, tv_series_id} = req.body;
       try {
         let tvEpisodesToUpdate = await tv_episodes.findByPk(tvEpisodesId, {
             include: [{
@@ -131,11 +131,11 @@ const getTvEpisodes = async (req, res) => {
           tvEpisodesToUpdate = await tv_episodes.update({
             name: name,
             rating: rating,
-            popularity: popularity,
+            runtime: runtime,
             year: year,
-            number_episodes: number_episodes,
             image: image,
-            description: description
+            description: description,
+            tv_series_id: tv_series_id
         },
           {where: {
             id: tvEpisodesId

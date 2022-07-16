@@ -6,11 +6,9 @@ const users = require("../controllers/users_controller");
 const crewMembers = require("../controllers/crew_members_controller");
 const movies = require("../controllers/movies_controller");
 const tvSeries = require("../controllers/tv_series_controller");
-//tv_episodes (foreign keys)
 const tvEpisodes = require("../controllers/tv_episodes_controller");
 const genres = require("../controllers/genres_controller");
 const roles = require("../controllers/roles_controller");
-//reviews (foreign keys)
 const reviews = require("../controllers/reviews_controller");
 
 router.get('/user', users.getAll);
@@ -54,18 +52,23 @@ router.post("/rol", roles.create);
 router.post("/rol/:id", roles.update);
 router.get("/rol/:id", roles.getOne);
 router.delete("/rol/:id", roles.delete);
-/*
+
 router.get("/review", reviews.getAll);
 router.post("/review", reviews.create);
 router.post("/review/:id", reviews.update);
 router.get("/review/:id", reviews.getOne);
-router.delete("/review/:id", reviews.delete);*/
+router.delete("/review/:id", reviews.delete);
 
 // Advance routers
 router.post("/user/create-with-review", users.createWithReview);
 router.post("/tv-series/create-with-episode", tvSeries.createWithTvEpisodes);
+router.post("/tv-series/create-review", tvSeries.createWithReview);
 router.post("/tv-series/create-with-genre", tvSeries.createWithGenres);
 router.post("/tv-series/create-with-crew-member", tvSeries.createWithCrewMembers);
 router.post("/tv-episode/create-with-genre", tvEpisodes.createWithGenres);
 router.post("/tv-episode/create-with-crew-member", tvEpisodes.createWithCrewMembers);
+router.post("/movie/create-review", movies.createWithReview);
+router.post("/movie/create-with-genre", movies.createWithGenre);
+router.post("/movie/create-with-crew-member", movies.createWithCrewMember);
+router.post("/crew-member/create-with-crew-member", crewMembers.createWithRoles);
 module.exports = router;

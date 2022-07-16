@@ -46,7 +46,7 @@ const createUser = async (req, res) => {
     createdUser = await users.create(req.body); 
   } catch(err) {
     console.error(err);
-    if  (err.username === 'SequelizeUniqueConstraintError') {
+    if  (err.username === 'SequelizeUniqueConstraintError' || err.email === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: 'The user already exists'});
     }
     return res.status(200).json(createdUser);
@@ -65,7 +65,7 @@ const createUserWithReview = async (req, res) => {
       }]}); 
   } catch(err) {
     console.error(err);
-    if  (err.username === 'SequelizeUniqueConstraintError') {
+    if  (err.username === 'SequelizeUniqueConstraintError' || err.email === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: 'The user already exists'});
     }
     return res.status(200).json(createdUserWithReview);

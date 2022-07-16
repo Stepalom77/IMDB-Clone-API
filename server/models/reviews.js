@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'movies_id',
         as: 'movies'
       });
-      reviews.belongsTo(models.roles, {
-        foreignKey: 'roles_id',
-        as: 'roles'
+      reviews.belongsTo(models.tv_series, {
+        foreignKey: 'tv_series_id',
+        as: 'tv_series'
       });
     }
   }

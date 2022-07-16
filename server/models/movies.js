@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'genres',
         foreignKey: 'movies_id'
       });
+      movies.belongsToMany(models.crew_members, {
+        through: 'movies_genres',
+        as: 'crew_members_movies',
+        foreignKey: 'movies_id'
+      });
       movies.hasMany(models.reviews, {
         foreignKey: 'movies_id',
         as: 'reviews',

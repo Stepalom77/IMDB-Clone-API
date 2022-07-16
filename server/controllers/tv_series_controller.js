@@ -1,4 +1,4 @@
-const { tv_series, tv_episodes, genres, crew_members } = require('../models');
+const { tv_series, tv_episodes, genres, crew_members, reviews } = require('../models');
 
 const getTvSeries = async (req, res) => {
   let allTvSeries = [];
@@ -13,7 +13,9 @@ const getTvSeries = async (req, res) => {
       }, {
         model: crew_members,
         as: 'crew_member'
-      }]});
+      }, {model: reviews,
+        as: 'review'
+    }]});
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -39,7 +41,9 @@ const getOneTvSeries = async (req, res,) => {
       }, {
         model: crew_members,
         as: 'crew_member'
-      }]});
+      }, {model: reviews,
+        as: 'review'
+    }]});
 
   }catch(error) {
     console.error(err);
@@ -76,6 +80,21 @@ const createTvSeriesWithTvEpisodes = async (req, res) => {
   }
 
   return res.status(200).json(createdTvSeriesWithTvEpisodes);
+}
+
+const createTvSeriesWithReview = async (req, res) => {
+  let createdTvSeriesWithReview = null;
+  try {
+    createdTvSeriesWithReview = await tv_series.create(req.body, {
+      include: [{model: reviews,
+        as: 'review'
+    }]}) 
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ error: err })
+  }
+
+  return res.status(200).json(createdTvSeriesWithReview);
 }
 
 const createTvSeriesWithGenres = async (req, res) => {
@@ -122,7 +141,9 @@ const updateTvSeries = async (req, res) => {
         }, {
           model: crew_members,
           as: 'crew_member'
-        }]})
+        }, {model: reviews,
+          as: 'review'
+      }]})
       tvSeriesToUpdate = await tv_series.update({
           name: name,
           rating: rating,
@@ -168,6 +189,7 @@ module.exports = {
   getOne: getOneTvSeries,
   create: createTvSeries,
   createWithTvEpisodes: createTvSeriesWithTvEpisodes,
+  createWithReview: createTvSeriesWithReview,
   createWithGenres: createTvSeriesWithGenres,
   createWithCrewMembers: createTvSeriesWithCrewMembers,
   update: updateTvSeries,

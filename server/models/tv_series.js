@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tv_series_id',
         as: 'tv_episodes',
       });
+      tv_series.hasMany(models.reviews, {
+        foreignKey: 'tv_series_id',
+        as: 'reviews',
+      });
       tv_series.belongsToMany(models.genres, {
         through: 'tv_series_genres',
         as: 'genres',
