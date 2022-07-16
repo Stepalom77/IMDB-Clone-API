@@ -1,8 +1,6 @@
 
 const express = require("express");
-
 const router = express.Router();
-
 
 const users = require("../controllers/users_controller");
 const crewMembers = require("../controllers/crew_members_controller");
@@ -38,12 +36,12 @@ router.post("/tv-series", tvSeries.create);
 router.post("/tv-series/:id", tvSeries.update);
 router.get("/tv-series/:id", tvSeries.getOne);
 router.delete("/tv-series/:id", tvSeries.delete);
-
+/*
 router.get("/tv-episode", tvEpisodes.getAll);
 router.post("/tv-episode", tvEpisodes.create);
 router.post("/tv-episode/:id", tvEpisodes.update);
 router.get("/tv-episode/:id", tvEpisodes.getOne);
-router.delete("/tv-episode/:id", tvEpisodes.delete);
+router.delete("/tv-episode/:id", tvEpisodes.delete);*/
 
 router.get("/genre", genres.getAll);
 router.post("/genre", genres.create);
@@ -56,13 +54,13 @@ router.post("/rol", roles.create);
 router.post("/rol/:id", roles.update);
 router.get("/rol/:id", roles.getOne);
 router.delete("/rol/:id", roles.delete);
-
+/*
 router.get("/review", reviews.getAll);
 router.post("/review", reviews.create);
 router.post("/review/:id", reviews.update);
 router.get("/review/:id", reviews.getOne);
-router.delete("/review/:id", reviews.delete);
+router.delete("/review/:id", reviews.delete);*/
 
 // Advance routers
-router.post("/user/create-with-review", users.createWithReview);
+//router.post("/user/create-with-review", users.createWithReview);
 module.exports = router;

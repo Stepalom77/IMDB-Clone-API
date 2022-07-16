@@ -7,12 +7,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 //Middlewares
-//const router = require('./server/routes/index');
+const router = require('./server/routes/index');
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(express.json());
 app.use(morgan('dev'));
-//app.use('/api/v1', router);
+app.use('/api/v1', router);
 
 app.get('/', (req, res) => {
     res.send('Server up & running ✅');
