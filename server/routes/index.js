@@ -36,12 +36,12 @@ router.post("/tv-series", tvSeries.create);
 router.post("/tv-series/:id", tvSeries.update);
 router.get("/tv-series/:id", tvSeries.getOne);
 router.delete("/tv-series/:id", tvSeries.delete);
-/*
+
 router.get("/tv-episode", tvEpisodes.getAll);
 router.post("/tv-episode", tvEpisodes.create);
 router.post("/tv-episode/:id", tvEpisodes.update);
 router.get("/tv-episode/:id", tvEpisodes.getOne);
-router.delete("/tv-episode/:id", tvEpisodes.delete);*/
+router.delete("/tv-episode/:id", tvEpisodes.delete);
 
 router.get("/genre", genres.getAll);
 router.post("/genre", genres.create);
@@ -62,5 +62,10 @@ router.get("/review/:id", reviews.getOne);
 router.delete("/review/:id", reviews.delete);*/
 
 // Advance routers
-//router.post("/user/create-with-review", users.createWithReview);
+router.post("/user/create-with-review", users.createWithReview);
+router.post("/tv-series/create-with-episode", tvSeries.createWithTvEpisodes);
+router.post("/tv-series/create-with-genre", tvSeries.createWithGenres);
+router.post("/tv-series/create-with-crew-member", tvSeries.createWithCrewMembers);
+router.post("/tv-episode/create-with-genre", tvEpisodes.createWithGenres);
+router.post("/tv-episode/create-with-crew-member", tvEpisodes.createWithCrewMembers);
 module.exports = router;

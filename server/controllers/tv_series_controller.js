@@ -41,12 +41,14 @@ const getOneTvSeries = async (req, res,) => {
         as: 'crew_member'
       }]});
 
-    return res.status(200).json(searchedTvSeries)
-  
   }catch(error) {
+    console.error(err);
+    if(!searchedTvSeries) {
+      return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    }
     
-    return res.status(402).json({message: "The tv series you are looking for does not exists"})
   }
+  return res.status(200).json(searchedTvSeries)
 }
 
 const createTvSeries = async (req, res) => {
@@ -55,10 +57,55 @@ const createTvSeries = async (req, res) => {
     createdTvSeries = await tv_series.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(402).json({ error: err })
+    return res.status(400).json({ error: err })
   }
 
   return res.status(200).json(createdTvSeries);
+}
+
+const createTvSeriesWithTvEpisodes = async (req, res) => {
+  let createdTvSeriesWithTvEpisodes = null;
+  try {
+    createdTvSeriesWithTvEpisodes = await tv_series.create(req.body, {
+      include: [{model: tv_episodes,
+        as: 'tv_episode'
+    }]}) 
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ error: err })
+  }
+
+  return res.status(200).json(createdTvSeriesWithTvEpisodes);
+}
+
+const createTvSeriesWithGenres = async (req, res) => {
+  let createdTvSeriesWithGenres = null;
+  try {
+    createdTvSeriesWithGenres = await tv_series.create(req.body, {
+      include: [{model: genres,
+        as: 'genre'
+    }]}) 
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ error: err })
+  }
+
+  return res.status(200).json(createdTvSeriesWithGenres);
+}
+
+const createTvSeriesWithCrewMembers = async (req, res) => {
+  let createdTvSeriesWithCrewMembers = null;
+  try {
+    createdTvSeriesWithCrewMembers = await tv_series.create(req.body, {
+      include: [{model: crew_members,
+        as: 'crew_member'
+    }]}) 
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ error: err })
+  }
+
+  return res.status(200).json(createdTvSeriesWithCrewMembers);
 }
 
 const updateTvSeries = async (req, res) => {
@@ -92,9 +139,8 @@ const updateTvSeries = async (req, res) => {
     } catch(err) {
       console.error(err);
       if(!tvSeriesToUpdate) {
-        return res.status(402).json({message: 'The tv series you are trying to update does not exists'})
+        return res.status(404).json({message: 'The tv series you are trying to update does not exists'})
       }
-      return res.status(402).json({error: err})
     }
       return res.status(200).json(tvSeriesToUpdate)
     } 
@@ -109,10 +155,10 @@ const deleteTvSeries = async (req, res) => {
       }
     });
   } catch(err) {
-    return res.status(402).json({ error: err })
+    return res.status(404).json({ error: err })
   }
   if (!deletedTvSeries) {
-    return res.status(402).json({message: "The tv series you are trying to delete does not exists"})
+    return res.status(404).json({message: "The tv series you are trying to delete does not exists"})
   }
   return res.status(200).json({message: "The tv series has been deleted"})
 }
@@ -121,6 +167,9 @@ module.exports = {
   getAll: getTvSeries,
   getOne: getOneTvSeries,
   create: createTvSeries,
+  createWithTvEpisodes: createTvSeriesWithTvEpisodes,
+  createWithGenres: createTvSeriesWithGenres,
+  createWithCrewMembers: createTvSeriesWithCrewMembers,
   update: updateTvSeries,
   delete: deleteTvSeries
 }
