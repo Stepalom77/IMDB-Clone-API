@@ -13,7 +13,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   roles.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'roles',

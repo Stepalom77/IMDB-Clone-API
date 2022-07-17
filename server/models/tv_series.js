@@ -32,7 +32,15 @@ module.exports = (sequelize, DataTypes) => {
     year: DataTypes.INTEGER,
     number_episodes: DataTypes.INTEGER,
     image: DataTypes.STRING,
-    description: DataTypes.TEXT
+    description: DataTypes.TEXT,
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'tv_series',

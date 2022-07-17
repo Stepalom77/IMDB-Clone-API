@@ -9,7 +9,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   movies_genres.init({
     movies_id: DataTypes.INTEGER,
-    genres_id: DataTypes.INTEGER
+    genres_id: DataTypes.INTEGER,
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'movies_genres',

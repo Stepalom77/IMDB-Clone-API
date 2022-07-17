@@ -32,7 +32,15 @@ module.exports = (sequelize, DataTypes) => {
     users_id: DataTypes.INTEGER,
     movies_id: DataTypes.INTEGER,
     tv_episodes_id: DataTypes.INTEGER,
-    tv_series_id: DataTypes.INTEGER
+    tv_series_id: DataTypes.INTEGER,
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'reviews',

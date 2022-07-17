@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crewMembers = require("../controllers/crew_members_controller");
+const authMiddleware = require('../middlewares/authorizationMiddleware');
 
 router.get("/crew-member", crewMembers.getAll);
 router.post("/crew-member", crewMembers.create);

@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const users = require("../controllers/users_controller");
+const authUser = require('../controllers/auth_users_controller');
+const authMiddleware = require('../middlewares/authorizationMiddleware');
 
-router.get('/user', users.getAll);
-router.post('/user', users.create);
-router.post('/user/:id', users.update);
-router.get('/user/:id', users.getOne);
-router.delete('/user/:id', users.delete);
+router.post('/auth-user/login', authUser.login);
+router.get('/users', authMiddleware, users.getAll);
+router.post('/users', users.create);
+router.post('/users/:id', authMiddleware, users.update);
+router.get('/users/:id', authMiddleware, users.getOne);
+router.delete('/users/:id', authMiddleware, users.delete);
 
 //Advance Routes
-router.post("/user/create-with-review", users.createWithReview);
+router.post("/users/create-with-review", users.createWithReview);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const argon2 = require('argon2');
 const { users, reviews } = require('../models');
 
 const getUsers = async (req, res) => {
@@ -6,7 +7,7 @@ const getUsers = async (req, res) => {
     allUsers = await users.findAll({
       include: [{
         model: reviews,
-        as: 'review'
+        as: 'reviews'
       }]});
   } catch(err) {
     console.error(err);
@@ -26,7 +27,7 @@ const getUser = async (req, res,) => {
     }, {
       include: [{
         model: reviews,
-        as: 'review'
+        as: 'reviews'
       }]});
   
   }catch(error) {
@@ -41,9 +42,20 @@ const getUser = async (req, res,) => {
 
 
 const createUser = async (req, res) => {
+  let {password, email} = req.body;
+  let hash = null;
+  try {
+     hash = await argon2.hash(password);
+  } catch (err) {
+    console.log(`There was an error with encription the password of the user ${req.body.email}`)
+    console.error(err);
+  }
   let createdUser = null;
   try {
-    createdUser = await users.create(req.body); 
+    createdUser = await users.create({
+      ...req.body,
+      password:hash
+  }); 
   } catch(err) {
     console.error(err);
     if  (err.username === 'SequelizeUniqueConstraintError' || err.email === 'SequelizeUniqueConstraintError') {
@@ -56,12 +68,23 @@ const createUser = async (req, res) => {
 }
 
 const createUserWithReview = async (req, res) => {
+  let {password, email} = req.body;
+  let hash = null;
+  try {
+     hash = await argon2.hash(password);
+  } catch (err) {
+    console.log(`There was an error with encription the password of the user ${req.body.email}`)
+    console.error(err);
+  }
   let createdUserWithReview = null;
   try {
-    createdUserWithReview = await users.create(req.body, {
+    createdUserWithReview = await users.create({
+      ...req.body,
+      password:hash
+  }, {
       include: [{
         model: reviews,
-        as: 'review'
+        as: 'reviews'
       }]}); 
   } catch(err) {
     console.error(err);
@@ -80,7 +103,7 @@ const updateUser = async (req, res) => {
       let userToUpdate = await users.findByPk(userId, {
         include: [{
           model: reviews,
-          as: 'review'
+          as: 'reviews'
         }]})
       userToUpdate = await users.update({
           username: username,

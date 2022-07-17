@@ -36,7 +36,6 @@ module.exports = {
       },
       movies_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'movies',
           key: 'id'
@@ -44,7 +43,6 @@ module.exports = {
       },
       tv_episodes_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'tv_episodes',
           key: 'id'
@@ -52,17 +50,16 @@ module.exports = {
       },
       tv_series_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'tv_series',
           key: 'id'
         }
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
