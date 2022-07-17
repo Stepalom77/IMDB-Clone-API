@@ -6,15 +6,15 @@ const getTvSeries = async (req, res) => {
     allTvSeries = await tv_series.findAll({
       include: [{
         model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
       }, {
         model: genres,
-        as: 'genre'
+        as: 'genres'
       }, {
         model: crew_members,
-        as: 'crew_member'
+        as: 'crew_members'
       }, {model: reviews,
-        as: 'review'
+        as: 'reviews'
     }]});
   } catch(err) {
     console.error(err);
@@ -34,15 +34,15 @@ const getOneTvSeries = async (req, res,) => {
     }, {
       include: [{
         model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
       }, {
         model: genres,
-        as: 'genre'
+        as: 'genres'
       }, {
         model: crew_members,
-        as: 'crew_member'
+        as: 'crew_members'
       }, {model: reviews,
-        as: 'review'
+        as: 'reviews'
     }]});
 
   }catch(error) {
@@ -72,7 +72,7 @@ const createTvSeriesWithTvEpisodes = async (req, res) => {
   try {
     createdTvSeriesWithTvEpisodes = await tv_series.create(req.body, {
       include: [{model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
     }]}) 
   } catch(err) {
     console.error(err);
@@ -87,7 +87,7 @@ const createTvSeriesWithReview = async (req, res) => {
   try {
     createdTvSeriesWithReview = await tv_series.create(req.body, {
       include: [{model: reviews,
-        as: 'review'
+        as: 'reviews'
     }]}) 
   } catch(err) {
     console.error(err);
@@ -102,7 +102,7 @@ const createTvSeriesWithGenres = async (req, res) => {
   try {
     createdTvSeriesWithGenres = await tv_series.create(req.body, {
       include: [{model: genres,
-        as: 'genre'
+        as: 'genres'
     }]}) 
   } catch(err) {
     console.error(err);
@@ -117,7 +117,7 @@ const createTvSeriesWithCrewMembers = async (req, res) => {
   try {
     createdTvSeriesWithCrewMembers = await tv_series.create(req.body, {
       include: [{model: crew_members,
-        as: 'crew_member'
+        as: 'crew_members'
     }]}) 
   } catch(err) {
     console.error(err);
@@ -134,15 +134,15 @@ const updateTvSeries = async (req, res) => {
       let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId, {
         include: [{
           model: tv_episodes,
-          as: 'tv_episode'
+          as: 'tv_episodes'
         }, {
           model: genres,
-          as: 'genre'
+          as: 'genres'
         }, {
           model: crew_members,
-          as: 'crew_member'
+          as: 'crew_members'
         }, {model: reviews,
-          as: 'review'
+          as: 'reviews'
       }]})
       tvSeriesToUpdate = await tv_series.update({
           name: name,

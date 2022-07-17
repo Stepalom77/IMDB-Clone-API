@@ -43,13 +43,12 @@ const getRole = async (req, res,) => {
 const createRole = async (req, res) => {
   let createdRole = null;
   try {
-    createdRole = await roles.create(req.body); 
+    createdRole = await roles.create({...req.body}); 
   } catch(err) {
     console.error(err);
     if  (err.name === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: 'The role already exists'});
     }
-    return res.status(200).json(createdRole);
   }
 
   return res.status(200).json(createdRole);

@@ -6,7 +6,7 @@ const getCrewMembers = async (req, res) => {
     crewMember = await crew_members.findAll({
       include: [{
         model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
       }, {
         model: tv_series,
         as: 'tv_series'
@@ -35,7 +35,7 @@ const getCrewMember = async (req, res) => {
     }, {
       include: [{
         model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
       }, {
         model: tv_series,
         as: 'tv_series'
@@ -86,7 +86,7 @@ const updateCrewMember = async (req, res) => {
     let crewMemberToUpdate = await crew_members.findByPk(crewMemberId, {
       include: [{
         model: tv_episodes,
-        as: 'tv_episode'
+        as: 'tv_episodes'
       }, {
         model: tv_series,
         as: 'tv_series'

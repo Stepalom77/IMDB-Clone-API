@@ -10,9 +10,9 @@ router.get("/tv-series/:id", tvSeries.getOne);
 router.delete("/tv-series/:id", tvSeries.delete);
 
 //Advance Routes
-router.post("/tv-series/create-with-episode", tvSeries.createWithTvEpisodes);
-router.post("/tv-series/create-review", tvSeries.createWithReview);
-router.post("/tv-series/create-with-genre", tvSeries.createWithGenres);
-router.post("/tv-series/create-with-crew-member", tvSeries.createWithCrewMembers);
+router.post("/tv-series/create-with-episodes", tvSeries.createWithTvEpisodes);
+router.post("/tv-series/create-reviews", tvSeries.createWithReview);
+router.post("/tv-series/create-with-genres", tvSeries.createWithGenres);
+router.post("/tv-series/create-with-crew-members", tvSeries.createWithCrewMembers);
 
 module.exports = router;

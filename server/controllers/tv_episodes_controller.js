@@ -9,10 +9,10 @@ const getTvEpisodes = async (req, res) => {
           as: 'tv_series'
         }, {
           model: genres,
-          as: 'genre'
+          as: 'genres'
         }, {
           model: crew_members,
-          as: 'crew_member'
+          as: 'crew_members'
         }, {
             model: reviews,
             as: 'reviews'
@@ -38,10 +38,10 @@ const getTvEpisodes = async (req, res) => {
           as: 'tv_series'
         }, {
           model: genres,
-          as: 'genre'
+          as: 'genres'
         }, {
           model: crew_members,
-          as: 'crew_member'
+          as: 'crew_members'
         }, {
             model: reviews,
             as: 'reviews'
@@ -82,7 +82,7 @@ const getTvEpisodes = async (req, res) => {
           as: 'tv_series'
         }, {
             model: genres,
-            as: 'genre'
+            as: 'genres'
           }]}); 
     } catch(err) {
       console.error(err);
@@ -120,7 +120,7 @@ const getTvEpisodes = async (req, res) => {
               as: 'tv_series'
             }, {
               model: genres,
-              as: 'genre'
+              as: 'genres'
             }, {
               model: crew_members,
               as: 'crew_member'
