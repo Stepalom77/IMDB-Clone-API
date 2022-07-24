@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const tv_series = require('./tv_series');
 module.exports = (sequelize, DataTypes) => {
   class tv_episodes extends Model {
     static associate(models) {
@@ -26,20 +27,31 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   tv_episodes.init({
-    name: DataTypes.STRING,
-    rating: DataTypes.INTEGER,
-    runtime: DataTypes.STRING,
-    year: DataTypes.INTEGER,
-    image: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    tv_series_id: DataTypes.INTEGER,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
+    rating: DataTypes.INTEGER,
+    runtime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    image: DataTypes.STRING,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    tv_series_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: tv_series,
+        key: 'id'
+      }
     }
   }, {
     sequelize,

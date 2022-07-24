@@ -9,15 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   crew_members_movies.init({
     crew_members_id: DataTypes.INTEGER,
-    movies_id: DataTypes.INTEGER,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
-    }
+    movies_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'crew_members_movies',

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('crew_members_roles', {
+    await queryInterface.createTable('crew_members_tv_series', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,25 +16,25 @@ module.exports = {
           key: 'id'
         }
       },
-      roles_id: {
+      tv_series_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'roles',
+          model: 'tv_series',
           key: 'id'
         }
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('crew_members_roles');
+    await queryInterface.dropTable('crew_members_tv_series');
   }
 };

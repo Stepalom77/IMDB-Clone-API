@@ -2,6 +2,10 @@
 const {
   Model
 } = require('sequelize');
+const movies = require('./movies');
+const tv_episodes = require('./tv_episodes');
+const users = require('./users');
+const tv_series = require('./tv_series');
 module.exports = (sequelize, DataTypes) => {
   class reviews extends Model {
     static associate(models) {
@@ -24,22 +28,51 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   reviews.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    rating: DataTypes.INTEGER,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     number_upvotes: DataTypes.INTEGER,
     number_downvotes: DataTypes.INTEGER,
-    users_id: DataTypes.INTEGER,
-    movies_id: DataTypes.INTEGER,
-    tv_episodes_id: DataTypes.INTEGER,
-    tv_series_id: DataTypes.INTEGER,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
+    users_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: users,
+        key: 'id'
+      }
     },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
+    movies_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: movies,
+        key: 'id'
+      }
+    },
+    tv_episodes_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: tv_episodes,
+        key: 'id'
+      }
+    },
+    tv_series_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: tv_series,
+        key: 'id'
+      }
     }
   }, {
     sequelize,

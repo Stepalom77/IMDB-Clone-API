@@ -22,20 +22,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   movies.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     rating: DataTypes.INTEGER,
     popularity: DataTypes.INTEGER,
-    year: DataTypes.INTEGER,
-    runtime: DataTypes.STRING,
-    image: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
+    runtime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    image: DataTypes.STRING,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   }, {
     sequelize,

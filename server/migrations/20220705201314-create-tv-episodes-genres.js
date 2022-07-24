@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('movies_genres', {
+    await queryInterface.createTable('tv_episodes_genres', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      movies_id: {
+      tv_episodes_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'movies',
+          model: 'tv_episodes',
           key: 'id'
         }
       },
@@ -24,17 +24,17 @@ module.exports = {
           key: 'id'
         }
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('movies_genres');
+    await queryInterface.dropTable('tv_episodes_genres');
   }
 };

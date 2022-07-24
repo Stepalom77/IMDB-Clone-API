@@ -23,14 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   genres.init({
-    name: DataTypes.STRING,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     sequelize,

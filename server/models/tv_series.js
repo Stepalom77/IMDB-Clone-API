@@ -26,21 +26,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   tv_series.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     rating: DataTypes.INTEGER,
     popularity: DataTypes.INTEGER,
-    year: DataTypes.INTEGER,
-    number_episodes: DataTypes.INTEGER,
-    image: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
-    }
+    number_episodes: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    image: DataTypes.STRING,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'tv_series',

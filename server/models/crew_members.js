@@ -28,18 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   crew_members.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    birthday: DataTypes.DATE,
-    photo: DataTypes.STRING,
-    createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE
-    }
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    birthday: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    photo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'crew_members',

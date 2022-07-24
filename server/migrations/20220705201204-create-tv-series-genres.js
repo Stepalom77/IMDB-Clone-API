@@ -1,39 +1,40 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('crew_members', {
+    await queryInterface.createTable('tv_series_genres', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
+      tv_series_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.STRING
+        references: {
+          model: 'tv_series',
+          key: 'id'
+        }
       },
-      last_name: {
+      genres_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.STRING
+        references: {
+          model: 'genres',
+          key: 'id'
+        }
       },
-      birthday: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      photo: {
-        type: Sequelize.STRING
-      },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('crew_members');
+    await queryInterface.dropTable('tv_series_genres');
   }
 };
