@@ -1,22 +1,9 @@
-const { tv_episodes, tv_series, reviews, genres, crew_members } = require('../models');
+const { tv_episodes, tv_series, genres, crew_members } = require('../models');
 
 const getTvEpisodes = async (req, res) => {
     let allTvEpisodes = [];
     try {
-      allTvEpisodes = await tv_episodes.findAll({
-        include: [{
-          model: tv_series,
-          as: 'tv_series'
-        }, {
-          model: genres,
-          as: 'genres'
-        }, {
-          model: crew_members,
-          as: 'crew_members'
-        }, {
-            model: reviews,
-            as: 'reviews'
-          }]})
+      allTvEpisodes = await tv_episodes.findAll()
     } catch(err) {
       console.error(err);
       return res.status(400).json({ error: err })
@@ -32,20 +19,7 @@ const getTvEpisodes = async (req, res) => {
     try {
       searchedTvEpisodes = await tv_episodes.findOne({
         where: { id: tvEpisodeId}
-      }, {
-        include: [{
-          model: tv_series,
-          as: 'tv_series'
-        }, {
-          model: genres,
-          as: 'genres'
-        }, {
-          model: crew_members,
-          as: 'crew_members'
-        }, {
-            model: reviews,
-            as: 'reviews'
-          }]});
+      });
   
     }catch(error) {
       console.error(err);
@@ -78,9 +52,6 @@ const getTvEpisodes = async (req, res) => {
     try {
       createdTvEpisodesWithGenres = await tv_episodes.create(req.body, {
         include: [{
-          model: tv_series,
-          as: 'tv_series'
-        }, {
             model: genres,
             as: 'genres'
           }]}); 
@@ -97,9 +68,6 @@ const getTvEpisodes = async (req, res) => {
     try {
       createdTvEpisodesWithCrewMembers = await tv_episodes.create(req.body, {
         include: [{
-          model: tv_series,
-          as: 'tv_series'
-        }, {
             model: crew_members,
             as: 'crew_member'
           }]}); 
@@ -114,20 +82,7 @@ const getTvEpisodes = async (req, res) => {
       let tvEpisodesId = req.params.id;
       let {name, rating, runtime, year, image, description, tv_series_id} = req.body;
       try {
-        let tvEpisodesToUpdate = await tv_episodes.findByPk(tvEpisodesId, {
-            include: [{
-              model: tv_series,
-              as: 'tv_series'
-            }, {
-              model: genres,
-              as: 'genres'
-            }, {
-              model: crew_members,
-              as: 'crew_member'
-            }, {
-                model: reviews,
-                as: 'reviews'
-              }]})
+        let tvEpisodesToUpdate = await tv_episodes.findByPk(tvEpisodesId)
           tvEpisodesToUpdate = await tv_episodes.update({
             name: name,
             rating: rating,
@@ -141,13 +96,14 @@ const getTvEpisodes = async (req, res) => {
             id: tvEpisodesId
           }
         })
+        return res.status(200).json(tvEpisodesToUpdate)
       } catch(err) {
         console.error(err);
         if(!tvEpisodesToUpdate) {
           return res.status(404).json({message: 'The tv episode you are trying to update does not exists'})
         }
       }
-        return res.status(200).json(tvEpisodesToUpdate)
+        
       } 
   
   const deleteTvEpisodes = async (req, res) => {

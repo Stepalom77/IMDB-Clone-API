@@ -1,22 +1,9 @@
-const { reviews, users, tv_episodes, movies, tv_series } = require('../models');
+const { reviews} = require('../models');
 
 const getReviews = async (req, res) => {
   let allReviews = [];
   try {
-    allReviews = await reviews.findAll({
-      include: [{
-        model: users,
-        as: 'users'
-      }, {
-        model: tv_episodes,
-        as: 'tv_episodes'
-      }, {
-        model: movies,
-        as: 'movies'
-      }, {
-        model: tv_series,
-        as: 'tv_series'
-      }]});
+    allReviews = await reviews.findAll();
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -32,20 +19,7 @@ const getReview = async (req, res,) => {
   try {
     searchedReview = await reviews.findOne({
       where: { id: reviewId}
-    }, {
-        include: [{
-          model: users,
-          as: 'users'
-        }, {
-          model: tv_episodes,
-          as: 'tv_episodes'
-        }, {
-          model: movies,
-          as: 'movies'
-        }, {
-          model: tv_series,
-          as: 'tv_series'
-        }]});
+    });
 
   }catch(error) {
     console.error(err);
@@ -61,20 +35,7 @@ const getReview = async (req, res,) => {
 const createReview = async (req, res) => {
   let createdReview = null;
   try {
-    createdReview = await reviews.create(req.body, {
-        include: [{
-          model: users,
-          as: 'users'
-        }, {
-          model: tv_episodes,
-          as: 'tv_episodes'
-        }, {
-          model: movies,
-          as: 'movies'
-        }, {
-          model: tv_series,
-          as: 'tv_series'
-        }]}); 
+    createdReview = await reviews.create(req.body); 
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -88,20 +49,7 @@ const updateReview = async (req, res) => {
     let {title, description, rating, number_upvotes, number_downvotes, users_id,
          movies_id, tv_episodes_id, tv_series_id} = req.body;
     try {
-      let reviewToUpdate = await reviews.findByPk(reviewId, {
-        include: [{
-          model: users,
-          as: 'users'
-        }, {
-          model: tv_episodes,
-          as: 'tv_episodes'
-        }, {
-          model: movies,
-          as: 'movies'
-        }, {
-          model: tv_series,
-          as: 'tv_series'
-        }]})
+      let reviewToUpdate = await reviews.findByPk(reviewId)
         reviewToUpdate = await reviews.update({
             title: title,
             description: description,
@@ -117,13 +65,14 @@ const updateReview = async (req, res) => {
           id: reviewId
         }
       })
+      return res.status(200).json(reviewToUpdate)
     } catch(err) {
       console.error(err);
       if(!reviewToUpdate) {
         return res.status(404).json({message: 'The review you are trying to update does not exists'})
       }
     }
-      return res.status(200).json(reviewToUpdate)
+      
     } 
 
 const deleteReview = async (req, res) => {

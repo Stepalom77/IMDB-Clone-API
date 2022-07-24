@@ -4,11 +4,7 @@ const { users, reviews } = require('../models');
 const getUsers = async (req, res) => {
   let allUsers = [];
   try {
-    allUsers = await users.findAll({
-      include: [{
-        model: reviews,
-        as: 'reviews'
-      }]});
+    allUsers = await users.findAll();
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -24,11 +20,7 @@ const getUser = async (req, res,) => {
   try {
     searchedUser= await users.findOne({
       where: { id: userId}
-    }, {
-      include: [{
-        model: reviews,
-        as: 'reviews'
-      }]});
+    });
   
   }catch(error) {
     console.error(err);
@@ -100,11 +92,7 @@ const updateUser = async (req, res) => {
     let userId = req.params.id;
     let {username, password, email, image} = req.body;
     try {
-      let userToUpdate = await users.findByPk(userId, {
-        include: [{
-          model: reviews,
-          as: 'reviews'
-        }]})
+      let userToUpdate = await users.findByPk(userId)
       userToUpdate = await users.update({
           username: username,
           password: password,

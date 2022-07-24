@@ -3,17 +3,7 @@ const { movies, genres, reviews, crew_members } = require('../models');
 const getMovies = async (req, res) => {
   let allMovies = [];
   try {
-    allMovies = await movies.findAll({
-      include: [{
-        model: genres,
-        as: 'genres'
-      }, {
-        model: reviews,
-        as: 'reviews'
-      }, {
-        model: crew_members,
-        as: 'crew_members'
-      }]});
+    allMovies = await movies.findAll();
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -29,17 +19,7 @@ const getMovie = async (req, res,) => {
   try {
     searchedMovie = await movies.findOne({
       where: { id: movieId}
-    }, {
-      include: [{
-        model: genres,
-        as: 'genres'
-      }, {
-        model: reviews,
-        as: 'reviews'
-      }, {
-        model: crew_members,
-        as: 'crew_members'
-      }]});
+    });
   
   }catch(error) {
     console.error(err);
@@ -116,17 +96,7 @@ const updateMovie = async (req, res) => {
     let movieId = req.params.id;
     let {name, rating, popularity, year, runtime, image, description} = req.body;
     try {
-      let movieToUpdate = await movies.findByPk(movieId, {
-        include: [{
-          model: genres,
-          as: 'genres'
-        }, {
-          model: reviews,
-          as: 'reviews'
-        }, {
-          model: crew_members,
-          as: 'crew_members'
-        }]})
+      let movieToUpdate = await movies.findByPk(movieId)
       movieToUpdate = await movies.update({
           name: name,
           rating: rating,
@@ -140,13 +110,14 @@ const updateMovie = async (req, res) => {
           id: movieId
         }
       })
+      return res.status(200).json(movieToUpdate)
     } catch(err) {
       console.error(err);
       if(!movieToUpdate) {
         return res.status(404).json({message: 'The movie you are trying to update does not exists'})
       }
     }
-      return res.status(200).json(movieToUpdate)
+      
     } 
 
 const deleteMovie = async (req, res) => {

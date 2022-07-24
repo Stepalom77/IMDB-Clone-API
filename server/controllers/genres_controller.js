@@ -1,19 +1,9 @@
-const { genres, tv_series, tv_episodes, movies } = require('../models');
+const { genres} = require('../models');
 
 const getGenres = async (req, res) => {
   let allGenres = [];
   try {
-    allGenres = await genres.findAll({
-      include: [{
-        model: tv_series,
-        as: 'tv_series'
-      }, {
-        model: tv_episodes,
-        as: 'tv_episodes'
-      }, {
-        model: movies,
-        as: 'movies'
-      }]});
+    allGenres = await genres.findAll();
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -29,17 +19,7 @@ const getGenre = async (req, res,) => {
   try {
     searchedGenre= await genres.findOne({
       where: { id: genreId}
-    }, {
-      include: [{
-        model: tv_series,
-        as: 'tv_series'
-      }, {
-        model: tv_episodes,
-        as: 'tv_episodes'
-      }, {
-        model: movies,
-        as: 'movies'
-      }]});
+    });
   
   }catch(error) {
     console.error(err);
@@ -72,17 +52,7 @@ const updateGenre = async (req, res) => {
     let genreId = req.params.id;
     let {name} = req.body;
     try {
-      let genreToUpdate = await genres.findByPk(genreId, {
-        include: [{
-          model: tv_series,
-          as: 'tv_series'
-        }, {
-          model: tv_episodes,
-          as: 'tv_episodes'
-        }, {
-          model: movies,
-          as: 'movies'
-        }]})
+      let genreToUpdate = await genres.findByPk(genreId)
       genreToUpdate = await genres.update({
           name: name
       },
@@ -90,13 +60,14 @@ const updateGenre = async (req, res) => {
           id: genreId
         }
       })
+      return res.status(200).json(genreToUpdate)
     } catch(err) {
       console.error(err);
       if(!genreToUpdate) {
         return res.status(404).json({message: 'The genre you are trying to update does not exists'})
       }
     }
-      return res.status(200).json(genreToUpdate)
+      
     } 
 
 const deleteGenre = async (req, res) => {

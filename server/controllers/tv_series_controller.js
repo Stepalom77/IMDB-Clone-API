@@ -3,19 +3,7 @@ const { tv_series, tv_episodes, genres, crew_members, reviews } = require('../mo
 const getTvSeries = async (req, res) => {
   let allTvSeries = [];
   try {
-    allTvSeries = await tv_series.findAll({
-      include: [{
-        model: tv_episodes,
-        as: 'tv_episodes'
-      }, {
-        model: genres,
-        as: 'genres'
-      }, {
-        model: crew_members,
-        as: 'crew_members'
-      }, {model: reviews,
-        as: 'reviews'
-    }]});
+    allTvSeries = await tv_series.findAll();
   } catch(err) {
     console.error(err);
     return res.status(400).json({ error: err })
@@ -31,19 +19,7 @@ const getOneTvSeries = async (req, res,) => {
   try {
     searchedTvSeries= await tv_series.findOne({
       where: { id: tvSeriesId}
-    }, {
-      include: [{
-        model: tv_episodes,
-        as: 'tv_episodes'
-      }, {
-        model: genres,
-        as: 'genres'
-      }, {
-        model: crew_members,
-        as: 'crew_members'
-      }, {model: reviews,
-        as: 'reviews'
-    }]});
+    });
 
   }catch(error) {
     console.error(err);
@@ -131,19 +107,7 @@ const updateTvSeries = async (req, res) => {
     let tvSeriesId = req.params.id;
     let {name, rating, popularity, year, number_episodes, image, description} = req.body;
     try {
-      let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId, {
-        include: [{
-          model: tv_episodes,
-          as: 'tv_episodes'
-        }, {
-          model: genres,
-          as: 'genres'
-        }, {
-          model: crew_members,
-          as: 'crew_members'
-        }, {model: reviews,
-          as: 'reviews'
-      }]})
+      let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId)
       tvSeriesToUpdate = await tv_series.update({
           name: name,
           rating: rating,
@@ -157,13 +121,14 @@ const updateTvSeries = async (req, res) => {
           id: tvSeriesId
         }
       })
+      return res.status(200).json(tvSeriesToUpdate)
     } catch(err) {
       console.error(err);
       if(!tvSeriesToUpdate) {
         return res.status(404).json({message: 'The tv series you are trying to update does not exists'})
       }
     }
-      return res.status(200).json(tvSeriesToUpdate)
+      
     } 
 
 const deleteTvSeries = async (req, res) => {
