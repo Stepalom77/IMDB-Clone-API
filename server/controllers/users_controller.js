@@ -27,8 +27,9 @@ const getUser = async (req, res,) => {
     if(!searchedUser) {
       return res.status(404).json({message: "The user you are looking for does not exists"})
     }
-    return res.status(200).json(searchedUser)
+    
   }
+  return res.status(200).json(searchedUser);
 }
 
 
