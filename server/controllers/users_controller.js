@@ -122,12 +122,12 @@ const deleteUser = async (req, res) => {
         id: userId
       }
     });
+    return res.status(204).json({message: "The user has been deleted"})
   } catch(err) {
   }
   if (!deletedUser) {
     return res.status(404).json({message: "The user you are trying to delete does not exists"})
   }
-  return res.status(204).json({message: "The user has been deleted"})
 }
 
 module.exports = {
