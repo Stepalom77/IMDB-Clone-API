@@ -327,7 +327,7 @@ module.exports = {
                     },
                     updatedAt: {
                         type: 'date',
-                        description: "Date that the role was role",
+                        description: "Date that the role was updated",
                         example: "2022-07-25T02:14:59.991Z"
                     },
                 }
@@ -347,12 +347,222 @@ module.exports = {
                     },
                     createdAt: {
                         type: 'date',
-                        description: "Date of creation of the role.",
+                        description: "Date of creation of the genre.",
                         example:"2022-07-25T02:14:59.991Z"
                     },
                     updatedAt: {
                         type: 'date',
-                        description: "Date that the role was role",
+                        description: "Date that the genre was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            tv_series_genres: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "1"
+                    },
+                    tv_series_id: {
+                        type: 'integer',
+                        description: "The id of the tv series related to this table.",
+                        example: "2"
+                    },
+                    genres_id: {
+                        type: 'integer',
+                        description: "The id of the genre related to this table",
+                        example: "9"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            tv_episodes_genres: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "6"
+                    },
+                    tv_episodes_id: {
+                        type: 'integer',
+                        description: "The id of the tv episode related to this table.",
+                        example: "1"
+                    },
+                    genres_id: {
+                        type: 'integer',
+                        description: "The id of the genre related to this table",
+                        example: "9"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            movies_genres: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "5"
+                    },
+                    movies_id: {
+                        type: 'integer',
+                        description: "The id of the movie related to this table.",
+                        example: "7"
+                    },
+                    genres_id: {
+                        type: 'integer',
+                        description: "The id of the genre related to this table",
+                        example: "8"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            crew_members_movies: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "11"
+                    },
+                    crew_members_id: {
+                        type: 'integer',
+                        description: "The id of the crew member related to this table.",
+                        example: "19"
+                    },
+                    movies_id: {
+                        type: 'integer',
+                        description: "The id of the movie related to this table",
+                        example: "2"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            crew_members_tv_series: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "12"
+                    },
+                    crew_members_id: {
+                        type: 'integer',
+                        description: "The id of the crew member related to this table.",
+                        example: "9"
+                    },
+                    tv_series_id: {
+                        type: 'integer',
+                        description: "The id of the tv series related to this table",
+                        example: "2"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            crew_members_tv_episodes: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "17"
+                    },
+                    crew_members_id: {
+                        type: 'integer',
+                        description: "The id of the crew member related to this table.",
+                        example: "14"
+                    },
+                    tv_episodes_id: {
+                        type: 'integer',
+                        description: "The id of the tv episode related to this table",
+                        example: "18"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
+                        example: "2022-07-25T02:14:59.991Z"
+                    },
+                }
+            },
+            crew_members_roles: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'integer',
+                        description: "The auto-generated id of this table.",
+                        example: "17"
+                    },
+                    crew_members_id: {
+                        type: 'integer',
+                        description: "The id of the crew member related to this table.",
+                        example: "22"
+                    },
+                    roles_id: {
+                        type: 'integer',
+                        description: "The id of the role related to this table",
+                        example: "21"
+                    },
+                    createdAt: {
+                        type: 'date',
+                        description: "Date of creation of this table.",
+                        example:"2022-07-25T02:14:59.991Z"
+                    },
+                    updatedAt: {
+                        type: 'date',
+                        description: "Date that this table was updated",
                         example: "2022-07-25T02:14:59.991Z"
                     },
                 }
