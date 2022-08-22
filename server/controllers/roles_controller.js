@@ -43,7 +43,7 @@ const createRole = async (req, res) => {
     }
   }
 
-  return res.status(200).json(createdRole);
+  return res.status(201).json(createdRole);
 }
 
 const updateRole = async (req, res) => {

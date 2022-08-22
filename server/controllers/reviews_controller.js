@@ -41,7 +41,7 @@ const createReview = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdReview);
+  return res.status(201).json(createdReview);
 }
 
 const updateReview = async (req, res) => {

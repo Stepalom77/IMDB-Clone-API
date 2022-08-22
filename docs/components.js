@@ -1,6 +1,11 @@
 module.exports = {
     components: {
         schemas: {
+            id: {
+                type: 'integer',
+                description: "The id of a resource.",
+                example: "1"
+            },
             users: {
                 type: 'object',
                 properties: {

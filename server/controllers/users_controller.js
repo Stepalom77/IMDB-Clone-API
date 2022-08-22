@@ -84,7 +84,7 @@ const createUserWithReview = async (req, res) => {
     if  (err.username === 'SequelizeUniqueConstraintError' || err.email === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: 'The user already exists'});
     }
-    return res.status(200).json(createdUserWithReview);
+    return res.status(201).json(createdUserWithReview);
   }
 
   return res.status(200).json(createdUserWithReview);

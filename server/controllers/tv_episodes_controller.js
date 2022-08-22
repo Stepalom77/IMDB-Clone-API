@@ -44,7 +44,7 @@ const getTvEpisodes = async (req, res) => {
       return res.status(400).json({ error: err })
     }
   
-    return res.status(200).json(createdTvEpisodes);
+    return res.status(201).json(createdTvEpisodes);
   }
 
   const createTvEpisodesWithGenres = async (req, res) => {
@@ -60,7 +60,7 @@ const getTvEpisodes = async (req, res) => {
       return res.status(400).json({ error: err })
     }
   
-    return res.status(200).json(createdTvEpisodesWithGenres);
+    return res.status(201).json(createdTvEpisodesWithGenres);
   }
   
   const createTvEpisodesWithCrewMembers = async (req, res) => {
@@ -76,7 +76,7 @@ const getTvEpisodes = async (req, res) => {
       return res.status(400).json({ error: err })
     }
   
-    return res.status(200).json(createdTvEpisodesWithCrewMembers);
+    return res.status(201).json(createdTvEpisodesWithCrewMembers);
   }
   const updateTvEpisodes = async (req, res) => {
       let tvEpisodesId = req.params.id;

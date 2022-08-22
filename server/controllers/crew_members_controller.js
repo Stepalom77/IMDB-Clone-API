@@ -40,7 +40,7 @@ const createCrewMember = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdCrewMember);
+  return res.status(201).json(createdCrewMember);
 }
 
 const createCrewMemberWithRoles = async (req, res) => {
@@ -52,7 +52,7 @@ const createCrewMemberWithRoles = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdCrewMemberWithRoles);
+  return res.status(201).json(createdCrewMemberWithRoles);
 }
 
 const updateCrewMember = async (req, res) => {

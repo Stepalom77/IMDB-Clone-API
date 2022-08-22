@@ -40,7 +40,7 @@ const createTvSeries = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdTvSeries);
+  return res.status(201).json(createdTvSeries);
 }
 
 const createTvSeriesWithTvEpisodes = async (req, res) => {
@@ -55,7 +55,7 @@ const createTvSeriesWithTvEpisodes = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdTvSeriesWithTvEpisodes);
+  return res.status(201).json(createdTvSeriesWithTvEpisodes);
 }
 
 const createTvSeriesWithReview = async (req, res) => {
@@ -70,7 +70,7 @@ const createTvSeriesWithReview = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdTvSeriesWithReview);
+  return res.status(201).json(createdTvSeriesWithReview);
 }
 
 const createTvSeriesWithGenres = async (req, res) => {
@@ -85,7 +85,7 @@ const createTvSeriesWithGenres = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdTvSeriesWithGenres);
+  return res.status(201).json(createdTvSeriesWithGenres);
 }
 
 const createTvSeriesWithCrewMembers = async (req, res) => {
@@ -100,7 +100,7 @@ const createTvSeriesWithCrewMembers = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdTvSeriesWithCrewMembers);
+  return res.status(201).json(createdTvSeriesWithCrewMembers);
 }
 
 const updateTvSeries = async (req, res) => {

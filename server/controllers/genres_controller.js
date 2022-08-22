@@ -45,7 +45,7 @@ const createGenre = async (req, res) => {
     }
   }
 
-  return res.status(200).json(createdGenre);
+  return res.status(201).json(createdGenre);
 }
 
 const updateGenre = async (req, res) => {

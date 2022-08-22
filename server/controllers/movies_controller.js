@@ -41,7 +41,7 @@ const createMovie = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdMovie);
+  return res.status(201).json(createdMovie);
 }
 
 const createMovieWithReview = async (req, res) => {
@@ -57,7 +57,7 @@ const createMovieWithReview = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdMovieWithReview);
+  return res.status(201).json(createdMovieWithReview);
 }
 
 const createMovieWithGenre = async (req, res) => {
@@ -73,7 +73,7 @@ const createMovieWithGenre = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdMovieWithGenre);
+  return res.status(201).json(createdMovieWithGenre);
 }
 
 const createMovieWithCrewMember = async (req, res) => {
@@ -89,7 +89,7 @@ const createMovieWithCrewMember = async (req, res) => {
     return res.status(400).json({ error: err })
   }
 
-  return res.status(200).json(createdMovieWithCrewMember );
+  return res.status(201).json(createdMovieWithCrewMember );
 }
 
 const updateMovie = async (req, res) => {
