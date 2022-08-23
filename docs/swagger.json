@@ -1,0 +1,253 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Clone of The Internet Movie Database API",
+    "description" : "Creating a clone of the API of the Internet Movie Database"
+  },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/Stepalom77/Imdb_clone/1.0.0"
+  }, {
+    "description" : "Production server",
+    "url" : "https://ste-imdb-clone.herokuapp.com/"
+  }, {
+    "description" : "Local server",
+    "url" : "http://localhost:5000"
+  } ],
+  "tags" : [ {
+    "name" : "users",
+    "description" : "This endpoint manage all the information of the account of an user."
+  }, {
+    "name" : "movies",
+    "description" : "This endpoint manage all the information of the movies."
+  }, {
+    "name" : "tv-series",
+    "description" : "This endpoint manage all the information of the tv series."
+  }, {
+    "name" : "tv-episodes",
+    "description" : "This endpoint manage all the information of the tv episodes of tv series."
+  }, {
+    "name" : "crew-members",
+    "description" : "This endpoint manage all the information of the crew members of movies and tv series."
+  }, {
+    "name" : "genres",
+    "description" : "This endpoint manage all the information of the genres of movies, tv series and tv episodes."
+  }, {
+    "name" : "reviews",
+    "description" : "This endpoint manage all the information of the reviews written by users about movies, tv series and tv episodes."
+  }, {
+    "name" : "roles",
+    "description" : "This endpoint manage all the information of the roles that crew members had in movies, tv series and tv episodes."
+  } ],
+  "paths" : {
+    "/api/v1/users" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Create a user account",
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/users"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "User was created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users_create"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequest"
+          },
+          "403" : {
+            "$ref" : "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Get all users accounts",
+        "responses" : {
+          "200" : {
+            "description" : "All users accounts were obtained",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}" : {
+      "get" : {
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/id"
+          }
+        } ],
+        "tags" : [ "users" ],
+        "summary" : "Get one user account",
+        "responses" : {
+          "200" : {
+            "description" : "The user account was obtained",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequest"
+          },
+          "404" : {
+            "description" : "User was not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "responses" : {
+      "Unauthorized" : {
+        "description" : "Incorrect password"
+      },
+      "BadRequest" : {
+        "description" : "There was an error"
+      }
+    },
+    "securitySchemes" : {
+      "BearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer"
+      }
+    },
+    "schemas" : {
+      "id" : {
+        "type" : "integer",
+        "description" : "The id of a resource.",
+        "example" : 1
+      },
+      "users" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "The auto-generated id of user's account.",
+            "example" : 1
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "The username of the user's account.",
+            "example" : "john55"
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "The hashed password of the user's account.",
+            "example" : "$argon2id$v=19$m=4096,t=3,p=1$drhulsNRIou+43HsUfdjLA$FyGAu1WcTQ3r60ood6/esa2A0lThiEnG5EXRc2Y1M1o"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "The email of the user.",
+            "example" : "john@email.com"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "The url of the profile image of the user's account.",
+            "example" : "https://image.com"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "description" : "Date of creation of the account.",
+            "example" : "2022-07-25T02:14:59.991Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "description" : "Date that the account was updated.",
+            "example" : "2022-07-25T02:14:59.991Z"
+          }
+        }
+      },
+      "users_create" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "The auto-generated id of user's account.",
+            "example" : 1
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "The username of the user's account.",
+            "example" : "john55"
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "The hashed password of the user's account.",
+            "example" : "$argon2id$v=19$m=4096,t=3,p=1$drhulsNRIou+43HsUfdjLA$FyGAu1WcTQ3r60ood6/esa2A0lThiEnG5EXRc2Y1M1o"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "The email of the user.",
+            "example" : "john@email.com"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "The url of the profile image of the user's account.",
+            "example" : "https://image.com"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "description" : "Date of creation of the account.",
+            "example" : "2022-07-25T02:14:59.991Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "description" : "Date that the account was updated.",
+            "example" : "2022-07-25T02:14:59.991Z"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          },
+          "internal_code" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
