@@ -6,7 +6,7 @@ const getCrewMembers = async (req, res) => {
     crewMember = await crew_members.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(crewMember)
@@ -25,6 +25,8 @@ const getCrewMember = async (req, res) => {
     console.error(err);
     if(!crewMember) {
       return res.status(404).json({message: 'The crew member you are trying to update does not exists'});
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
   }
 
@@ -37,7 +39,7 @@ const createCrewMember = async (req, res) => {
     createdCrewMember = await crew_members.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdCrewMember);
@@ -49,7 +51,7 @@ const createCrewMemberWithRoles = async (req, res) => {
     createdCrewMemberWithRoles = await crew_members.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdCrewMemberWithRoles);
@@ -58,8 +60,9 @@ const createCrewMemberWithRoles = async (req, res) => {
 const updateCrewMember = async (req, res) => {
   let crewMemberId = req.params.id;
   let {first_name, last_name, birthday, photo} = req.body;
+  let crewMemberToUpdate = null;
   try {
-    let crewMemberToUpdate = await crew_members.findByPk(crewMemberId)
+    crewMemberToUpdate = await crew_members.findByPk(crewMemberId)
     crewMemberToUpdate = await crew_members.update({
         first_name: first_name,
         last_name: last_name,
@@ -70,14 +73,15 @@ const updateCrewMember = async (req, res) => {
         id: crewMemberId
       }
     })
-    return res.status(200).json(crewMemberToUpdate)
   } catch(err) {
     console.error(err);
     if(!crewMemberToUpdate) {
       return res.status(404).json({message: 'The crew member you are trying to update does not exists'})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
   }
-   
+  return res.status(200).json(crewMemberToUpdate)
   } 
 
 const deleteCrewMember = async(req, res) => {
@@ -93,6 +97,8 @@ const deleteCrewMember = async(req, res) => {
     console.error(err)
     if(!crewMemberToDelete) {
       return res.status(404).json({message: 'The crew member you are trying to delete does not exists'})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
   }
   return res.status(204).json({message: 'The crew member has been deleted'})

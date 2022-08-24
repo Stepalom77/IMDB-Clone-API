@@ -6,7 +6,7 @@ const getRoles = async (req, res) => {
     allRoles = await roles.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(allRoles)
@@ -25,6 +25,8 @@ const getRole = async (req, res,) => {
     console.error(err);
     if(!searchedRole) {
       return res.status(404).json({message: "The role you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
   }
   return res.status(200).json(searchedRole)
@@ -49,8 +51,9 @@ const createRole = async (req, res) => {
 const updateRole = async (req, res) => {
     let roleId = req.params.id;
     let {name} = req.body;
+    let roleToUpdate = null;
     try {
-      let roleToUpdate = await roles.findByPk(roleId)
+      roleToUpdate = await roles.findByPk(roleId)
       roleToUpdate = await roles.update({
           name: name
       },
@@ -58,14 +61,15 @@ const updateRole = async (req, res) => {
           id: roleId
         }
       })
-      return res.status(200).json(roleToUpdate)
     } catch(err) {
       console.error(err);
       if(!roleToUpdate) {
         return res.status(404).json({message: 'The role you are trying to update does not exists'})
+      } else {
+        return res.status(400).json({message: "There was an error"})
       }
     }
-      
+    return res.status(200).json(roleToUpdate) 
     } 
 
 const deleteRole = async (req, res) => {
@@ -79,9 +83,11 @@ const deleteRole = async (req, res) => {
     });
   } catch(err) {
     console.error(err);
-  }
-  if (!deletedRole) {
-    return res.status(404).json({message: "The role you are trying to delete does not exists"})
+    if (!deletedRole) {
+      return res.status(404).json({message: "The role you are trying to delete does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
   }
   return res.status(204).json({message: "The role has been deleted"})
 }

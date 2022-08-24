@@ -6,7 +6,7 @@ const getReviews = async (req, res) => {
     allReviews = await reviews.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(allReviews)
@@ -25,6 +25,8 @@ const getReview = async (req, res,) => {
     console.error(err);
     if(!searchedReview) {
       return res.status(404).json({message: "The review you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
   }
   return res.status(200).json(searchedReview)
@@ -38,7 +40,7 @@ const createReview = async (req, res) => {
     createdReview = await reviews.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdReview);
@@ -48,9 +50,10 @@ const updateReview = async (req, res) => {
     let reviewId = req.params.id;
     let {title, description, rating, number_upvotes, number_downvotes, users_id,
          movies_id, tv_episodes_id, tv_series_id} = req.body;
+    let reviewToUpdate = null;
     try {
-      let reviewToUpdate = await reviews.findByPk(reviewId)
-        reviewToUpdate = await reviews.update({
+      reviewToUpdate = await reviews.findByPk(reviewId)
+      reviewToUpdate = await reviews.update({
             title: title,
             description: description,
             rating: rating,
@@ -65,14 +68,15 @@ const updateReview = async (req, res) => {
           id: reviewId
         }
       })
-      return res.status(200).json(reviewToUpdate)
     } catch(err) {
       console.error(err);
       if(!reviewToUpdate) {
         return res.status(404).json({message: 'The review you are trying to update does not exists'})
+      } else {
+        return res.status(400).json({message: "There was an error"})
       }
     }
-      
+    return res.status(200).json(reviewToUpdate) 
     } 
 
 const deleteReview = async (req, res) => {
@@ -86,9 +90,11 @@ const deleteReview = async (req, res) => {
     });
   } catch(err) {
     console.error(err);
-  }
-  if (!deletedRole) {
-    return res.status(404).json({message: "The review you are trying to delete does not exists"})
+    if (!deletedRole) {
+      return res.status(404).json({message: "The review you are trying to delete does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
   }
   return res.status(204).json({message: "The review has been deleted"})
 }

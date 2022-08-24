@@ -6,7 +6,7 @@ const getTvSeries = async (req, res) => {
     allTvSeries = await tv_series.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(allTvSeries)
@@ -25,8 +25,9 @@ const getOneTvSeries = async (req, res,) => {
     console.error(err);
     if(!searchedTvSeries) {
       return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
-    
   }
   return res.status(200).json(searchedTvSeries)
 }
@@ -37,7 +38,7 @@ const createTvSeries = async (req, res) => {
     createdTvSeries = await tv_series.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdTvSeries);
@@ -52,7 +53,7 @@ const createTvSeriesWithTvEpisodes = async (req, res) => {
     }]}) 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdTvSeriesWithTvEpisodes);
@@ -67,7 +68,7 @@ const createTvSeriesWithReview = async (req, res) => {
     }]}) 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdTvSeriesWithReview);
@@ -82,7 +83,7 @@ const createTvSeriesWithGenres = async (req, res) => {
     }]}) 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdTvSeriesWithGenres);
@@ -97,7 +98,7 @@ const createTvSeriesWithCrewMembers = async (req, res) => {
     }]}) 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdTvSeriesWithCrewMembers);
@@ -106,8 +107,9 @@ const createTvSeriesWithCrewMembers = async (req, res) => {
 const updateTvSeries = async (req, res) => {
     let tvSeriesId = req.params.id;
     let {name, rating, popularity, year, number_episodes, image, description} = req.body;
+    let tvSeriesToUpdate = null;
     try {
-      let tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId)
+      tvSeriesToUpdate = await tv_series.findByPk(tvSeriesId)
       tvSeriesToUpdate = await tv_series.update({
           name: name,
           rating: rating,
@@ -121,14 +123,15 @@ const updateTvSeries = async (req, res) => {
           id: tvSeriesId
         }
       })
-      return res.status(200).json(tvSeriesToUpdate)
     } catch(err) {
       console.error(err);
       if(!tvSeriesToUpdate) {
         return res.status(404).json({message: 'The tv series you are trying to update does not exists'})
+      } else {
+        return res.status(400).json({message: "There was an error"})
       }
     }
-      
+    return res.status(200).json(tvSeriesToUpdate)
     } 
 
 const deleteTvSeries = async (req, res) => {
@@ -141,10 +144,12 @@ const deleteTvSeries = async (req, res) => {
       }
     });
   } catch(err) {
-    return res.status(404).json({ error: err })
-  }
-  if (!deletedTvSeries) {
-    return res.status(404).json({message: "The tv series you are trying to delete does not exists"})
+    console.error(err)
+    if (!deletedTvSeries) {
+      return res.status(404).json({message: "The tv series you are trying to delete does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
   }
   return res.status(200).json({message: "The tv series has been deleted"})
 }

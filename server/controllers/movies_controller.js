@@ -6,7 +6,7 @@ const getMovies = async (req, res) => {
     allMovies = await movies.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(allMovies)
@@ -25,10 +25,10 @@ const getMovie = async (req, res,) => {
     console.error(err);
     if(!searchedMovie) {
       return res.status(402).json({message: "The movie you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
-    
   }
-
   return res.status(200).json(searchedMovie)
 }
 
@@ -38,7 +38,7 @@ const createMovie = async (req, res) => {
     createdMovie = await movies.create(req.body); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdMovie);
@@ -54,7 +54,7 @@ const createMovieWithReview = async (req, res) => {
       }]}); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdMovieWithReview);
@@ -70,7 +70,7 @@ const createMovieWithGenre = async (req, res) => {
       }]}); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdMovieWithGenre);
@@ -86,7 +86,7 @@ const createMovieWithCrewMember = async (req, res) => {
       }]}); 
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(201).json(createdMovieWithCrewMember );
@@ -95,8 +95,9 @@ const createMovieWithCrewMember = async (req, res) => {
 const updateMovie = async (req, res) => {
     let movieId = req.params.id;
     let {name, rating, popularity, year, runtime, image, description} = req.body;
+    let movieToUpdate = null;
     try {
-      let movieToUpdate = await movies.findByPk(movieId)
+      movieToUpdate = await movies.findByPk(movieId)
       movieToUpdate = await movies.update({
           name: name,
           rating: rating,
@@ -110,14 +111,15 @@ const updateMovie = async (req, res) => {
           id: movieId
         }
       })
-      return res.status(200).json(movieToUpdate)
     } catch(err) {
       console.error(err);
       if(!movieToUpdate) {
         return res.status(404).json({message: 'The movie you are trying to update does not exists'})
+      } else {
+        return res.status(400).json({message: "There was an error"})
       }
     }
-      
+    return res.status(200).json(movieToUpdate)
     } 
 
 const deleteMovie = async (req, res) => {
@@ -131,9 +133,11 @@ const deleteMovie = async (req, res) => {
     });
   } catch(err) {
     console.error(err);
-  }
-  if (!deletedMovie) {
-    return res.status(404).json({message: "The movie you are trying to delete does not exists"})
+    if (!deletedMovie) {
+      return res.status(404).json({message: "The movie you are trying to delete does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
   }
   return res.status(204).json({message: "The movie has been deleted"})
 }

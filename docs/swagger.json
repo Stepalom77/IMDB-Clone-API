@@ -1350,7 +1350,7 @@
             "content" :{
               "application/json" :{
                   "example" :{
-                    "message" : "There was an error"
+                    "message" : "The role you are trying to create already exist"
                   }
               }
             }
@@ -1554,7 +1554,7 @@
             "content" :{
               "application/json" :{
                   "example" :{
-                    "message" : "There was an error"
+                    "message" : "The genre you are trying to create already exist"
                   }
               }
             }

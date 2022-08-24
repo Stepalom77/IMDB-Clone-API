@@ -7,7 +7,7 @@ const getUsers = async (req, res) => {
     allUsers = await users.findAll();
   } catch(err) {
     console.error(err);
-    return res.status(400).json({ error: err })
+    return res.status(400).json({ message: "There was an error" })
   }
 
   return res.status(200).json(allUsers)
@@ -26,6 +26,8 @@ const getUser = async (req, res,) => {
     console.error(err);
     if(!searchedUser) {
       return res.status(404).json({message: "The user you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
     }
     
   }
@@ -54,7 +56,7 @@ const createUser = async (req, res) => {
     if  (err.username === 'SequelizeUniqueConstraintError' || err.email === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: 'The user already exists'});
     }
-    return res.status(200).json(createdUser);
+    return res.status(201).json(createdUser);
   }
 
   return res.status(200).json(createdUser);
@@ -92,8 +94,9 @@ const createUserWithReview = async (req, res) => {
 const updateUser = async (req, res) => {
     let userId = req.params.id;
     let {username, password, email, image} = req.body;
+    let userToUpdate = null;
     try {
-      let userToUpdate = await users.findByPk(userId)
+      userToUpdate = await users.findByPk(userId)
       userToUpdate = await users.update({
           username: username,
           password: password,
@@ -104,13 +107,15 @@ const updateUser = async (req, res) => {
           id: userId
         }
       })
-      return res.status(200).json(userToUpdate)
     } catch(err) {
       console.error(err);
       if(!userToUpdate) {
         return res.status(404).json({message: 'The user you are trying to update does not exists'})
+      } else {
+      return res.status(400).json({message: "There was an error"})
       }
     }
+    return res.status(200).json(userToUpdate)
     } 
 
 const deleteUser = async (req, res) => {
@@ -122,12 +127,14 @@ const deleteUser = async (req, res) => {
         id: userId
       }
     });
-    return res.status(204).json({message: "The user has been deleted"})
   } catch(err) {
+    console.error(err)
+    if (!deletedUser) {
+      return res.status(404).json({message: "The user you are trying to delete does not exists"})
+    }
+    return res.status(200).json(userToUpdate)
   }
-  if (!deletedUser) {
-    return res.status(404).json({message: "The user you are trying to delete does not exists"})
-  }
+  return res.status(204).json({message: "The user has been deleted"})
 }
 
 module.exports = {
