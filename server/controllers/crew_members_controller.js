@@ -1,4 +1,4 @@
-const { crew_members} = require('../models');
+const { crew_members, roles} = require('../models');
 
 const getCrewMembers = async (req, res) => {
   let crewMember = [];
@@ -12,15 +12,53 @@ const getCrewMembers = async (req, res) => {
   return res.status(200).json(crewMember)
 }
 
+const getCrewMembersWithRoles = async (req, res) => {
+  let crewMember = [];
+  try {
+    crewMember = await crew_members.findAll({
+      include:[{
+          model: roles
+        }]}
+    );
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(crewMember)
+}
+
 const getCrewMember = async (req, res) => {
   let crewMember = [];
   let crewMemberId = req.params.id;
   try {
-    crewMember =  await crew_members.findAll({
+    crewMember =  await crew_members.findOne({
       where: {
         id: crewMemberId
       } 
     });
+  } catch(err) {
+    console.error(err);
+    if(!crewMember) {
+      return res.status(404).json({message: 'The crew member you are trying to update does not exists'});
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+
+  return res.status(200).json(crewMember)
+}
+
+const getCrewMemberWithRoles = async (req, res) => {
+  let crewMember = [];
+  let crewMemberId = req.params.id;
+  try {
+    crewMember =  await crew_members.findOne(
+      {where: { id: crewMemberId},
+        include: {
+          model: roles,
+          through: {attributes: []}}
+      });
   } catch(err) {
     console.error(err);
     if(!crewMember) {
@@ -43,18 +81,6 @@ const createCrewMember = async (req, res) => {
   }
 
   return res.status(201).json(createdCrewMember);
-}
-
-const createCrewMemberWithRoles = async (req, res) => {
-  let createdCrewMemberWithRoles = null;
-  try {
-    createdCrewMemberWithRoles = await crew_members.create(req.body); 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdCrewMemberWithRoles);
 }
 
 const updateCrewMember = async (req, res) => {
@@ -107,8 +133,9 @@ const deleteCrewMember = async(req, res) => {
 module.exports = {
   getAll: getCrewMembers,
   getOne: getCrewMember,
+  getAllWithRoles: getCrewMembersWithRoles,
+  getWithRoles: getCrewMemberWithRoles,
   create: createCrewMember,
-  createWithRoles: createCrewMemberWithRoles,
   update: updateCrewMember,
   delete: deleteCrewMember
 }

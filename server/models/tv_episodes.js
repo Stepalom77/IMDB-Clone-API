@@ -6,23 +6,18 @@ const tv_series = require('./tv_series');
 module.exports = (sequelize, DataTypes) => {
   class tv_episodes extends Model {
     static associate(models) {
-      tv_episodes.hasMany(models.reviews, {
-        foreignKey: 'tv_episodes_id',
-        as: 'reviews',
-      });
+      tv_episodes.hasMany(models.reviews);
       tv_episodes.belongsTo(models.tv_series, {
-        foreignKey: 'tv_series_id',
+        foreignKey: 'tvSeriesId',
         as: 'tv_series'
       });
       tv_episodes.belongsToMany(models.genres, {
         through: 'tv_episodes_genres',
-        as: 'genres',
-        foreignKey: 'tv_episodes_id'
+        foreignKey: 'tvEpisodesId'
       });
       tv_episodes.belongsToMany(models.crew_members, {
         through: 'crew_members_tv_episodes',
-        as: 'crew_members',
-        foreignKey: 'tv_episodes_id'
+        foreignKey: 'tvEpisodesId'
       });
     }
   }
@@ -45,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    tv_series_id: {
+    tvSeriesId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

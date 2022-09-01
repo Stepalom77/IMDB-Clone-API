@@ -48,8 +48,8 @@ const createReview = async (req, res) => {
 
 const updateReview = async (req, res) => {
     let reviewId = req.params.id;
-    let {title, description, rating, number_upvotes, number_downvotes, users_id,
-         movies_id, tv_episodes_id, tv_series_id} = req.body;
+    let {title, description, rating, number_upvotes, number_downvotes, usersId,
+         moviesId, tvEpisodesId, tvSeriesId} = req.body;
     let reviewToUpdate = null;
     try {
       reviewToUpdate = await reviews.findByPk(reviewId)
@@ -59,10 +59,10 @@ const updateReview = async (req, res) => {
             rating: rating,
             number_upvotes: number_upvotes,
             number_downvotes: number_downvotes,
-            users_id: users_id,
-            movies_id: movies_id,
-            tv_episodes_id: tv_episodes_id,
-            tv_series_id: tv_series_id
+            usersId: usersId,
+            moviesId: moviesId,
+            tvEpisodesId: tvEpisodesId,
+            tvSeriesId: tvSeriesId
       },
         {where: {
           id: reviewId

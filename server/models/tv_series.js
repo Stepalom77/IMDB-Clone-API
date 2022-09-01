@@ -5,23 +5,15 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class tv_series extends Model {
     static associate(models) {
-      tv_series.hasMany(models.tv_episodes, {
-        foreignKey: 'tv_series_id',
-        as: 'tv_episodes',
-      });
-      tv_series.hasMany(models.reviews, {
-        foreignKey: 'tv_series_id',
-        as: 'reviews',
-      });
+      tv_series.hasMany(models.tv_episodes);
+      tv_series.hasMany(models.reviews);
       tv_series.belongsToMany(models.genres, {
         through: 'tv_series_genres',
-        as: 'genres',
-        foreignKey: 'tv_series_id'
+        foreignKey: 'tvSeriesId'
       });
       tv_series.belongsToMany(models.crew_members, {
         through: 'crew_members_tv_series',
-        as: 'crew_members',
-        foreignKey: 'tv_series_id'
+        foreignKey: 'tvSeriesId'
       });
     }
   }

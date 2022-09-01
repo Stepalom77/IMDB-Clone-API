@@ -8,19 +8,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      movies_id: {
-        type: Sequelize.INTEGER,
+      moviesId: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
-          model: 'movies',
+          model: {
+            tableName: 'movies',
+          },
           key: 'id'
         }
       },
-      genres_id: {
-        type: Sequelize.INTEGER,
+      genresId: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
-          model: 'genres',
+          model: {
+            tableName: 'genres',
+          },
           key: 'id'
         }
       },

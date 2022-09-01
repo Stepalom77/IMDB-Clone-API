@@ -10,19 +10,19 @@ module.exports = (sequelize, DataTypes) => {
   class reviews extends Model {
     static associate(models) {
       reviews.belongsTo(models.users, {
-        foreignKey: 'users_id',
+        foreignKey: 'usersId',
         as: 'users'
       });
       reviews.belongsTo(models.tv_episodes, {
-        foreignKey: 'tv_episodes_id',
+        foreignKey: 'tvEpisodesId',
         as: 'tv_episodes'
       });
       reviews.belongsTo(models.movies, {
-        foreignKey: 'movies_id',
+        foreignKey: 'moviesId',
         as: 'movies'
       });
       reviews.belongsTo(models.tv_series, {
-        foreignKey: 'tv_series_id',
+        foreignKey: 'tvSeriesId',
         as: 'tv_series'
       });
     }
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     number_upvotes: DataTypes.INTEGER,
     number_downvotes: DataTypes.INTEGER,
-    users_id: {
+    usersId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    movies_id: {
+    moviesId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    tv_episodes_id: {
+    tvEpisodesId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    tv_series_id: {
+    tvSeriesId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

@@ -26,32 +26,43 @@ module.exports = {
       number_downvotes: {
         type: Sequelize.INTEGER
       },
-      users_id: {
-        type: Sequelize.INTEGER,
+      usersId: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
-          model: 'users',
+          model: {
+            tableName: 'users',
+          },
           key: 'id'
         }
       },
-      movies_id: {
+      moviesId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'movies',
+          model: {
+            tableName: 'movies',
+          },
           key: 'id'
         }
       },
-      tv_episodes_id: {
+      tvEpisodesId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'tv_episodes',
+          model: {
+            tableName: 'tv_episodes',
+          },
           key: 'id'
         }
       },
-      tv_series_id: {
+      tvSeriesId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'tv_series',
+          model: {
+            tableName: 'tv_series',
+          },
           key: 'id'
         }
       },

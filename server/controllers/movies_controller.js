@@ -12,6 +12,51 @@ const getMovies = async (req, res) => {
   return res.status(200).json(allMovies)
 }
 
+const getMoviesWithReviews = async (req, res) => {
+  let allMovies = [];
+  try {
+    allMovies = await movies.findAll({
+      include: [{
+        model: reviews
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allMovies)
+}
+
+const getMoviesWithGenres = async (req, res) => {
+  let allMovies = [];
+  try {
+    allMovies = await movies.findAll({
+      include: [{
+        model: genres
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allMovies)
+}
+
+const getMoviesWithCrewMembers = async (req, res) => {
+  let allMovies = [];
+  try {
+    allMovies = await movies.findAll({
+      include: [{
+        model: crew_members
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allMovies)
+}
+
 const getMovie = async (req, res,) => {
   let movieId = req.params.id;
   let searchedMovie = null;
@@ -24,7 +69,78 @@ const getMovie = async (req, res,) => {
   }catch(error) {
     console.error(err);
     if(!searchedMovie) {
-      return res.status(402).json({message: "The movie you are looking for does not exists"})
+      return res.status(404).json({message: "The movie you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedMovie)
+}
+
+const getMovieWithReviews = async (req, res,) => {
+  let movieId = req.params.id;
+  let searchedMovie = null;
+  
+  try {
+    searchedMovie = await movies.findOne({
+      include: [{
+        model: reviews,
+        where: {movieId: movieId}
+      }]},
+      {
+        where: { id: movieId}
+      });
+  
+  }catch(error) {
+    console.error(err);
+    if(!searchedMovie) {
+      return res.status(404).json({message: "The movie you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedMovie)
+}
+
+const getMovieWithGenres = async (req, res,) => {
+  let movieId = req.params.id;
+  let searchedMovie = null;
+  
+  try {
+    searchedMovie = await movies.findOne(
+      {where: { id: movieId},
+        include: {
+          model: genres,
+          through: {attributes: []}}
+      });
+  
+  }catch(error) {
+    console.error(err);
+    if(!searchedMovie) {
+      return res.status(404).json({message: "The movie you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedMovie)
+}
+
+const getMovieWithCrewMembers = async (req, res,) => {
+  let movieId = req.params.id;
+  let searchedMovie = null;
+  
+  try {
+    searchedMovie = await movies.findOne(
+      {where: { id: movieId},
+        include: {
+          model: crew_members,
+          through: {attributes: []}}
+      });
+  
+  }catch(error) {
+    console.error(err);
+    if(!searchedMovie) {
+      return res.status(404).json({message: "The movie you are looking for does not exists"})
     } else {
       return res.status(400).json({message: "There was an error"})
     }
@@ -42,54 +158,6 @@ const createMovie = async (req, res) => {
   }
 
   return res.status(201).json(createdMovie);
-}
-
-const createMovieWithReview = async (req, res) => {
-  let createdMovieWithReview = null;
-  try {
-    createdMovieWithReview = await movies.create(req.body, {
-      include: [{
-        model: reviews,
-        as: 'reviews'
-      }]}); 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdMovieWithReview);
-}
-
-const createMovieWithGenre = async (req, res) => {
-  let createdMovieWithGenre = null;
-  try {
-    createdMovieWithGenre = await movies.create(req.body, {
-      include: [{
-        model: genres,
-        as: 'genres'
-      }]}); 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdMovieWithGenre);
-}
-
-const createMovieWithCrewMember = async (req, res) => {
-  let createdMovieWithCrewMember  = null;
-  try {
-    createdMovieWithCrewMember  = await movies.create(req.body, {
-      include: [{
-        model: crew_members,
-        as: 'crew_members'
-      }]}); 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdMovieWithCrewMember );
 }
 
 const updateMovie = async (req, res) => {
@@ -146,9 +214,12 @@ module.exports = {
   getAll: getMovies,
   getOne: getMovie,
   create: createMovie,
-  createWithReview: createMovieWithReview,
-  createWithGenre: createMovieWithGenre,
-  createWithCrewMember: createMovieWithCrewMember,
+  getAllWithReviews: getMoviesWithReviews,
+  getAllWithGenres: getMoviesWithGenres,
+  getAllWithCrewMembers: getMoviesWithCrewMembers,
+  getWithReviews: getMovieWithReviews,
+  getWithGenres: getMovieWithGenres,
+  getWithCrewMembers: getMovieWithCrewMembers,
   update: updateMovie,
   delete: deleteMovie
 }

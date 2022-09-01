@@ -12,6 +12,66 @@ const getTvSeries = async (req, res) => {
   return res.status(200).json(allTvSeries)
 }
 
+const getTvSeriesWithTvEpisodes = async (req, res) => {
+  let allTvSeries = [];
+  try {
+    allTvSeries = await tv_series.findAll({
+      include: [{
+        model: tv_episodes
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allTvSeries)
+}
+
+const getTvSeriesWithReviews = async (req, res) => {
+  let allTvSeries = [];
+  try {
+    allTvSeries = await tv_series.findAll({
+      include: [{
+        model: reviews
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allTvSeries)
+}
+
+const getTvSeriesWithGenres = async (req, res) => {
+  let allTvSeries = [];
+  try {
+    allTvSeries = await tv_series.findAll({
+      include: [{
+        model: genres
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allTvSeries)
+}
+
+const getTvSeriesWithCrewMembers = async (req, res) => {
+  let allTvSeries = [];
+  try {
+    allTvSeries = await tv_series.findAll({
+      include: [{
+        model: crew_members
+      }]});
+  } catch(err) {
+    console.error(err);
+    return res.status(400).json({ message: "There was an error" })
+  }
+
+  return res.status(200).json(allTvSeries)
+}
+
 const getOneTvSeries = async (req, res,) => {
   let tvSeriesId = req.params.id;
   let searchedTvSeries = null;
@@ -21,6 +81,98 @@ const getOneTvSeries = async (req, res,) => {
       where: { id: tvSeriesId}
     });
 
+  }catch(error) {
+    console.error(err);
+    if(!searchedTvSeries) {
+      return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedTvSeries)
+}
+
+const getOneTvSeriesWithTvEpisodes = async (req, res,) => {
+  let tvSeriesId = req.params.id;
+  let searchedTvSeries = null;
+  
+  try {
+    searchedTvSeries= await tv_series.findOne({
+      include: [{
+        model: tv_episodes,
+        where: {tvSeriesId: tvSeriesId}
+      }]},
+      {
+        where: { id: tvSeriesId}
+      });
+  }catch(error) {
+    console.error(err);
+    if(!searchedTvSeries) {
+      return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedTvSeries)
+}
+
+const getOneTvSeriesWithReviews = async (req, res,) => {
+  let tvSeriesId = req.params.id;
+  let searchedTvSeries = null;
+  
+  try {
+    searchedTvSeries= await tv_series.findOne({
+      include: [{
+        model: reviews,
+        where: {tvSeriesId: tvSeriesId}
+      }]},
+      {
+        where: { id: tvSeriesId}
+      });
+  }catch(error) {
+    console.error(err);
+    if(!searchedTvSeries) {
+      return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedTvSeries)
+}
+
+const getOneTvSeriesWithGenres = async (req, res,) => {
+  let tvSeriesId = req.params.id;
+  let searchedTvSeries = null;
+  
+  try {
+    searchedTvSeries= await tv_series.findOne(
+      {where: { id: tvSeriesId},
+        include: {
+          model: genres,
+          through: {attributes: []}}
+      });
+  }catch(error) {
+    console.error(err);
+    if(!searchedTvSeries) {
+      return res.status(404).json({message: "The tv series you are looking for does not exists"})
+    } else {
+      return res.status(400).json({message: "There was an error"})
+    }
+  }
+  return res.status(200).json(searchedTvSeries)
+}
+
+const getOneTvSeriesWithCrewMembers = async (req, res,) => {
+  let tvSeriesId = req.params.id;
+  let searchedTvSeries = null;
+  
+  try {
+    searchedTvSeries= await tv_series.findOne(
+      {where: { id: tvSeriesId},
+        include: {
+          model: crew_members,
+          through: {attributes: []}}
+      });
   }catch(error) {
     console.error(err);
     if(!searchedTvSeries) {
@@ -42,66 +194,6 @@ const createTvSeries = async (req, res) => {
   }
 
   return res.status(201).json(createdTvSeries);
-}
-
-const createTvSeriesWithTvEpisodes = async (req, res) => {
-  let createdTvSeriesWithTvEpisodes = null;
-  try {
-    createdTvSeriesWithTvEpisodes = await tv_series.create(req.body, {
-      include: [{model: tv_episodes,
-        as: 'tv_episodes'
-    }]}) 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdTvSeriesWithTvEpisodes);
-}
-
-const createTvSeriesWithReview = async (req, res) => {
-  let createdTvSeriesWithReview = null;
-  try {
-    createdTvSeriesWithReview = await tv_series.create(req.body, {
-      include: [{model: reviews,
-        as: 'reviews'
-    }]}) 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdTvSeriesWithReview);
-}
-
-const createTvSeriesWithGenres = async (req, res) => {
-  let createdTvSeriesWithGenres = null;
-  try {
-    createdTvSeriesWithGenres = await tv_series.create(req.body, {
-      include: [{model: genres,
-        as: 'genres'
-    }]}) 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdTvSeriesWithGenres);
-}
-
-const createTvSeriesWithCrewMembers = async (req, res) => {
-  let createdTvSeriesWithCrewMembers = null;
-  try {
-    createdTvSeriesWithCrewMembers = await tv_series.create(req.body, {
-      include: [{model: crew_members,
-        as: 'crew_members'
-    }]}) 
-  } catch(err) {
-    console.error(err);
-    return res.status(400).json({ message: "There was an error" })
-  }
-
-  return res.status(201).json(createdTvSeriesWithCrewMembers);
 }
 
 const updateTvSeries = async (req, res) => {
@@ -158,10 +250,14 @@ module.exports = {
   getAll: getTvSeries,
   getOne: getOneTvSeries,
   create: createTvSeries,
-  createWithTvEpisodes: createTvSeriesWithTvEpisodes,
-  createWithReview: createTvSeriesWithReview,
-  createWithGenres: createTvSeriesWithGenres,
-  createWithCrewMembers: createTvSeriesWithCrewMembers,
+  getAllWithTvEpisodes: getTvSeriesWithTvEpisodes,
+  getAllWithReviews: getTvSeriesWithReviews,
+  getAllWithGenres: getTvSeriesWithGenres,
+  getAllWithCrewMembers: getTvSeriesWithCrewMembers,
+  getWithTvEpisodes: getOneTvSeriesWithTvEpisodes,
+  getWithReviews: getOneTvSeriesWithReviews,
+  getWithGenres: getOneTvSeriesWithGenres,
+  getWithCrewMembers: getOneTvSeriesWithCrewMembers,
   update: updateTvSeries,
   delete: deleteTvSeries
 }

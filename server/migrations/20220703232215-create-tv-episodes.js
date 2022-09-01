@@ -30,11 +30,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      tv_series_id: {
-        type: Sequelize.INTEGER,
+      tvSeriesId: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
-          model: 'tv_series',
+          model: {
+            tableName: 'tv_series',
+          },
           key: 'id'
         }
       },

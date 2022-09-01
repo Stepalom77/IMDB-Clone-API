@@ -7,18 +7,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       genres.belongsToMany(models.tv_series, {
         through: 'tv_series_genres',
-        as: 'tv_series',
-        foreignKey: 'genres_id'
+        foreignKey: 'genresId'
       });
       genres.belongsToMany(models.tv_episodes, {
         through: 'tv_episodes_genres',
-        as: 'tv_episodes',
-        foreignKey: 'genres_id'
+        foreignKey: 'genresId'
       });
       genres.belongsToMany(models.movies, {
         through: 'movies_genres',
-        as: 'movies',
-        foreignKey: 'genres_id'
+        foreignKey: 'genresId'
       });
     }
   }

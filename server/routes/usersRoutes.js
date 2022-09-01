@@ -12,6 +12,7 @@ router.get('/users/:id', users.getOne);
 router.delete('/users/:id', authMiddleware, users.delete);
 
 //Advance Routes
-router.post("/users/create-with-reviews", users.createWithReview);
+router.get("/users/get-with-reviews", users.getAllWithReview);
+router.get("/users/get-with-reviews/:id", users.getWithReview);
 
 module.exports = router;

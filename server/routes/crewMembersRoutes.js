@@ -10,6 +10,7 @@ router.get("/crew-members/:id", crewMembers.getOne);
 router.delete("/crew-members/:id", crewMembers.delete);
 
 //Advance Routes
-router.post("/crew-members/create-with-roles", crewMembers.createWithRoles);
+router.get("/crew-members/get-with-roles", crewMembers.getAllWithRoles);
+router.get("/crew-members/get-with-roles/:id", crewMembers.getWithRoles);
 
 module.exports = router;
