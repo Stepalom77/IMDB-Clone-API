@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const tvEpisodes = require("../controllers/tv_episodes_controller");
-const authMiddleware = require('../middlewares/authorizationMiddleware');
+
 
 router.get("/tv-episodes", tvEpisodes.getAll);
 router.post("/tv-episodes", tvEpisodes.create);

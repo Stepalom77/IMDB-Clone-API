@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const genres = require("../controllers/genres_controller");
-const authMiddleware = require('../middlewares/authorizationMiddleware');
+
 
 router.get("/genres", genres.getAll);
 router.post("/genres", genres.create);
