@@ -19,6 +19,9 @@
     "name" : "users",
     "description" : "This endpoint manage all the information of the account of an user."
   }, {
+    "name" : "login",
+    "description" : "This endpoint is the login for the user."
+  }, {
     "name" : "movies",
     "description" : "This endpoint manage all the information of the movies."
   }, {
@@ -216,6 +219,15 @@
         "security" : [ {
           "BearerAuth" : [ ]
         } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/users"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The user account was updated",
@@ -356,6 +368,54 @@
                 "example" :{
                   "message": "The user you are looking for does not exists",
                   "internal_code":"Invalid id"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth-user/login" : {
+      "post" : {
+        "tags" : ["login"],
+        "summary" : "Login one user to it's account.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/login"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login was successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/login_create"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Incorrect password",
+            "content" :{
+              "application/json" :{
+                  "example" :{
+                    "message" : "Incorrect password",
+                    "internal_code" : "auth/wrong-password"
+                  }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Login error",
+            "content" :{
+              "application/json" :{
+                "example" : {
+                  "message" : "Login error"
                 }
               }
             }
@@ -572,6 +632,15 @@
         } ],
         "tags" : [ "movies" ],
         "summary" : "Update one movie",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/movies"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The movie was updated",
@@ -1012,6 +1081,15 @@
         } ],
         "tags" : [ "tv-series" ],
         "summary" : "Update one tv series",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/tv_series"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The tv series was updated",
@@ -1463,6 +1541,15 @@
         } ],
         "tags" : [ "tv-episodes" ],
         "summary" : "Update one tv episode",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/tv_episodes"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The tv episode was updated",
@@ -1816,6 +1903,15 @@
         } ],
         "tags" : [ "crew-members" ],
         "summary" : "Update one crew member",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/crew_members"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The crew member was updated",
@@ -2063,6 +2159,15 @@
         "security" : [ {
           "BearerAuth" : [ ]
         } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/reviews"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The review was updated",
@@ -2292,6 +2397,15 @@
         } ],
         "tags" : [ "roles" ],
         "summary" : "Update one role",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/roles"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The role was updated",
@@ -2496,6 +2610,15 @@
         } ],
         "tags" : [ "genres" ],
         "summary" : "Update one genre",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/genres"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "description" : "The genre was updated",
@@ -3035,6 +3158,46 @@
                 }
               }
             ]
+          }
+        }
+      },
+      "login" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "Email of the user.",
+            "example" : "john_doe@email.com"
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "The password of the user's account.",
+            "example" : "kjwenfr8347ytf292f8u2f9j8"
+          }
+        }
+      },
+      "login_create" : {
+        "type" : "object",
+        "properties" : {
+          "token": {
+            "type" : "string",
+            "description" : "The token generated when the user logs in.",
+            "example" : "u8dny3d8y23f23fou3b012v98n8y198c2rf23m981m90mi"
+          },
+          "id" : {
+            "type" : "integer",
+            "description" : "The id of a user",
+            "example": "1"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "Email of the user.",
+            "example" : "john_doe@email.com"
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "The username of the user's account.",
+            "example" : "john55"
           }
         }
       },
