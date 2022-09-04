@@ -7,7 +7,10 @@
   },
   "servers" : [{
     "description" : "Production server",
-    "url" : "https://ste-imdb-clone.herokuapp.com/"
+    "url" : "https://www.imdb-api-clone.xyz/"
+  }, {
+    "description" : "Alternative server",
+    "url" : "http://www.imdb-api-clone.xyz/"
   }, {
     "description" : "SwaggerHub API Auto Mocking",
     "url" : "https://virtserver.swaggerhub.com/Stepalom77/Imdb_clone/1.0.0"
