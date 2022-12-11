@@ -2,11 +2,15 @@ require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const cors = require("cors");
+const mysql = require('mysql2')
 const swaggerUI = require("swagger-ui-express");
 const docs = require('./docs/swagger.json')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const connection = mysql.createConnection(process.env.DATABASE_URL)
+console.log('Connected to PlanetScale!')
+connection.end()
 
 //Import routes
 const crewMembersRoute = require('./server/routes/crewMembersRoutes');
