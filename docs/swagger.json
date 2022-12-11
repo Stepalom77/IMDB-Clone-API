@@ -7,10 +7,10 @@
   },
   "servers" : [{
     "description" : "Production server",
-    "url" : "https://www.imdb-api-clone.xyz/"
+    "url" : "https://imdb-clone-api.onrender.com/"
   }, {
     "description" : "Alternative server",
-    "url" : "http://www.imdb-api-clone.xyz/"
+    "url" : "https://imdb-clone-api.onrender.com/"
   }, {
     "description" : "SwaggerHub API Auto Mocking",
     "url" : "https://virtserver.swaggerhub.com/Stepalom77/Imdb_clone/1.0.0"

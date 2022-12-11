@@ -5,14 +5,14 @@ development: {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
-    dialect: "mysql"
+    dialect: "postgres"
 },
 test: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
-    dialect: "mysql"
+    dialect: "postgres"
 },
 
 production: {
@@ -20,7 +20,7 @@ production: {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
-    dialect: "mysql"
+    dialect: "postgres"
 }
 /*
 used for deploying in heroku
